@@ -3,18 +3,12 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const deviceSchema = new Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    minlength: 3
-  },
-}, 
-{
-  timestamps: true,
-});
+    name: { type: String, required: true },
+    comments: { type: String },
+    location: { type: Schema.Types.ObjectId, ref: "Location" },
+},
+    { timestamps: true });
 
-const Job = mongoose.model('Job', deviceSchema);
+const Device = mongoose.model('Device', deviceSchema);
 
-module.exports = Job;
+module.exports = Device;

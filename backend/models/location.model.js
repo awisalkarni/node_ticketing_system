@@ -3,17 +3,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const locationSchema = new Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    minlength: 3
-  },
-}, 
-{
-  timestamps: true,
-});
+    name: { type: String, required: true },
+    zone: { type: Schema.Types.ObjectId, ref: "Zone" },
+},
+    { timestamps: true }
+);
 
 const Location = mongoose.model('Location', locationSchema);
 
