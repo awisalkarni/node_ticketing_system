@@ -6,6 +6,7 @@ let Device = require('../models/device.model');
 
 router.route('/').get((req, res) => {
     Ticket.find()
+        .populate(['priority', 'user', 'device'])
         .then(tickets => res.json(tickets))
         .catch(err => res.status(400).json('Error: ' + err));
 });

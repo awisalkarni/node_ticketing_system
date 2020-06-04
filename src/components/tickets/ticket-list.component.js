@@ -11,13 +11,13 @@ const Ticket = props => (
             {props.tickets.description}
         </td>
         <td>
-            {props.tickets.priority}
+            {props.tickets.priority.name}
         </td>
         <td>
-            {props.tickets.user}
+            {props.tickets.user.username}
         </td>
         <td>
-            {props.tickets.device}
+            {props.tickets.device.name}
         </td>
         <td>
             <Link to={"/ticket/edit/" + props.tickets._id}>Edit</Link> | <button className="btn btn-default" onClick={() => props.deleteTicket(props.exercise._id)}>Delete</button> 
