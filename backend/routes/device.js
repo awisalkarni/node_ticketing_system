@@ -3,7 +3,7 @@ let Device = require('../models/device.model');
 
 router.route('/').get((req, res) => {
     Device.find()
-        .then(priorities => res.json(priorities))
+        .then(devices => res.json(devices))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 

@@ -1,10 +1,31 @@
 const router = require('express').Router();
 let Ticket = require('../models/ticket.model');
+let User = require('../models/user.model');
+let Priority = require('../models/priority.model');
+let Device = require('../models/device.model');
 
 router.route('/').get((req, res) => {
     Ticket.find()
         .then(tickets => res.json(tickets))
         .catch(err => res.status(400).json('Error: ' + err));
+});
+
+router.route('/add/prepare').get(async (req, res) => {
+    
+
+    Promise.all([
+        User.find(),
+        Priority.find(),
+        Device.find()
+    ]).then(([users, priorities, devices])=>{
+        res.json({
+            'users': users,
+            'priorities': priorities,
+            'devices': devices
+        });
+    })
+    .catch(err => { res.status(400).json('error: ' + err) });
+
 });
 
 router.route('/add').post((req, res) => {
