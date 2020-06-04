@@ -1,6 +1,4 @@
-import React, {Component} from 'react';
-import DatePicker  from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css";
+import React, { Component } from 'react';
 import axios from 'axios';
 
 export default class CreateTicket extends Component {
@@ -8,101 +6,139 @@ export default class CreateTicket extends Component {
     constructor(props) {
         super(props);
 
-        this.onChangeUsername = this.onChangeUsername.bind(this);
-        this.onChangeDescription = this.onChangeDescription.bind(this);
-        this.onChangeDuration = this.onChangeDuration.bind(this);
-        this.onChangeDate = this.onChangeDate.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-
         this.state = {
             title: "",
             description: "",
-            priority: [],
-            status: "",
-            user: [],
-            device: [],
+
+            users: [],
+            selectedUser: "",
+            priorities: [],
+            selectedPriorities: "",
+            devices: [],
+            selectedDevices: "",
         }
+
+        this.onChangeUsername = this.onChangeUsername.bind(this);
+        this.onChangeTitle = this.onChangeTitle.bind(this);
+        this.onChangeDescription = this.onChangeDescription.bind(this);
+        this.onChangePriority = this.onChangePriority.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+
+        
     }
 
     componentDidMount() {
-        //get users
+        //get 
         axios.get('http://localhost:8080/ticket/add/prepare')
             .then(res => {
-                if (res.data.length > 0) {
-                    this.setState({
-                        users: res.data.map(user => user.username),
-                        username: res.data[0].username
-                    })
-                }
+                console.log(res.data)
+
+                this.setState({
+                    users: res.data.users,
+                    selectedUser: res.data.users[0]._id,
+
+                    priorities: res.data.priorities,
+                    selectedPriorities: res.data.priorities[0]._id,
+
+                    devices: res.data.devices,
+                    selectedDevices: res.data.devices[0]._id
+                })
+
+
+
             });
     }
 
     onChangeUsername(e) {
         this.setState({
-            username: e.target.value
+            selectedUser: e.target.value
         })
     }
+
+    onChangeTitle(e) {
+        this.setState({
+            title: e.target.value
+        })
+    }
+
     onChangeDescription(e) {
         this.setState({
             description: e.target.value
         })
     }
-    onChangeDuration(e) {
+    
+    onChangeDevices(e) {
         this.setState({
-            duration: e.target.value
+            selectedDevices: e.target.value
         })
     }
-    onChangeDate(date) {
+    
+    onChangePriority(e) {
         this.setState({
-            date: date
+            selectedPriorities: e.target.value
         })
+
+        console.log(this.state.selectedPriorities);
     }
 
     onSubmit(e) {
         e.preventDefault();
 
-        const exercise = {
-            username: this.state.username,
+        const ticket = {
+            title: this.state.title,
             description: this.state.description,
-            duration: this.state.duration,
-            date: this.state.date
+            priority: this.state.selectedPriorities,
+            user: this.state.selectedUser,
+            device: this.state.selectedDevices
         }
 
-        axios.post('http://localhost:8080/ticket/add', exercise)
-            .then(res => console.log(exercise));
+        console.log(ticket);
 
-        console.log(exercise);
+        axios.post('http://localhost:8080/ticket/add', ticket)
+            .then(res => console.log(ticket));
+
+        // console.log(tickets);
 
         window.location = '/';
     }
 
-    render(){
+    render() {
         return (
             <div>
-                <h3>Create new exercise</h3>
+                <h3>Create new Ticket</h3>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <label>Username: </label>
-                        <select 
-                        required
-                        className="form-control"
-                        defaultValue={{ label: "Select User", value: 0 }}
-                        value={this.state.username}
-                        onChange={this.onChangeUsername}>
+                        <select
+                            required
+                            className="form-control"
+                            value={this.state.username}
+                            onChange={this.onChangeUsername}>
                             {
                                 this.state.users.map(user => {
                                     return <option
-                                    key={user}
-                                    value={user}>
-                                        {user}
+                                        key={user._id}
+                                        value={user._id}>
+                                        {user.username}
                                     </option>
                                 })
                             }
                         </select>
                     </div>
                     <div className="form-group">
+                        <label>Title</label>
+                        <input
+                            required
+                            type="text"
+                            className="form-control"
+                            value={this.state.title}
+                            onChange={this.onChangeTitle}
+                        />
+                    </div>
+                    <div className="form-group">
                         <label>Description</label>
-                        <input 
+                        <textarea
+                            required
                             type="text"
                             className="form-control"
                             value={this.state.description}
@@ -111,27 +147,49 @@ export default class CreateTicket extends Component {
                     </div>
 
                     <div className="form-group">
-                        <label>Duration (in minutes)</label>
-                        <input 
-                            type="text"
+                        <label>Devices: </label>
+                        <select
+                            required
                             className="form-control"
-                            value={this.state.duration}
-                            onChange={this.onChangeDuration}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Date: </label>
-                        <div>
-                            <DatePicker
-                            selected={this.state.date}
-                            onChange={this.onChangeDate}
-                            />
-                        </div>
+                            
+                            value={this.state.selectedDevices}
+                            onChange={this.onChangeDevices}>
+                            {
+                                this.state.devices.map(device => {
+                                    return <option
+                                        key={device._id}
+                                        value={device._id}>
+                                        {device.name}
+                                    </option>
+                                })
+                            }
+                        </select>
                     </div>
 
                     <div className="form-group">
-                        <input type="submit" value="Create Exercise" className="btn btn-primary"/>
+                        <label>Priority: </label>
+                        <select
+                            required
+                            className="form-control"
+                            
+                            value={this.state.selectedPriorities}
+                            onChange={this.onChangePriority}>
+                            {
+                                this.state.priorities.map(priority => {
+                                    return <option
+                                        key={priority._id}
+                                        value={priority._id}>
+                                        {priority.name}
+                                    </option>
+                                })
+                            }
+                        </select>
                     </div>
+
+                    <div className="form-group">
+                        <input type="submit" value="Create Ticket" className="btn btn-primary"/>
+                    </div>
+
                 </form>
             </div>
         )

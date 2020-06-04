@@ -9,12 +9,14 @@ router.route('/').get((req, res) => {
 
 router.route('/add').post((req, res) => {
     const name = req.body.name;
-    const color = req.body.color;
+    const comments = req.body.comments;
+    const location = req.body.location;
 
 
     const newDevice = new Device({
         name,
-        color
+        comments,
+        location
     });
 
     newDevice.save()
@@ -36,11 +38,12 @@ router.route('/:id').delete((req, res) => {
 
 router.route('/update/:id').post((req, res) => {
     Device.findById(req.params.id)
-        .then(Device => {
-            Device.name = req.body.name;
-            Device.color = req.body.color;
+        .then(device => {
+            device.name = req.body.name;
+            device.comments = req.body.comments;
+            device.location = req.body.location;
 
-            Device.save()
+            device.save()
                 .then(() => res.json('Device updated!'))
                 .catch(err => res.status(400).json('Error: ' + err));
         })

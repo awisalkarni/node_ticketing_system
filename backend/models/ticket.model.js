@@ -5,9 +5,9 @@ const Schema = mongoose.Schema;
 const ticketSchema = new Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
-  priority: { type: Schema.Types.ObjectId, ref: "Priority" },
   status: { type: String, default: "open" },
   user: { type: Schema.Types.ObjectId, ref: "User" },
+  priority: { type: Schema.Types.ObjectId, ref: "Priority" },
   device: { type: Schema.Types.ObjectId, ref: "Device" },
 },
   { timestamps: true }

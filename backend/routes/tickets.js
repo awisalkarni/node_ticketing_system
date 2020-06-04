@@ -11,7 +11,6 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add/prepare').get(async (req, res) => {
-    
 
     Promise.all([
         User.find(),
@@ -52,7 +51,7 @@ router.route('/add').post((req, res) => {
 });
 
 router.route('/:id').get((req, res) => {
-    Ticket.findById(req.params.id)
+    Ticket.findOne({_id: req.params.id }).populate(['priority', 'user', 'device'])
         .then(ticket => res.json(ticket))
         .catch(err => res.status(400).json('Error: ' + err));
 });

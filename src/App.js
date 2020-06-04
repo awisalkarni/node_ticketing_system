@@ -10,6 +10,8 @@ import ExercisesList from "./components/exercises-list.component";
 import EditExercise from "./components/edit-exercise.component";
 import CreateExercise from "./components/create-exercise.component";
 import CreateUser from "./components/create-user.component";
+import CreateTicket from "./components/tickets/create-ticket.component";
+import TicketsList from "./components/tickets/ticket-list.component";
 
 function App() {
   return (
@@ -18,7 +20,8 @@ function App() {
       <div className="container">
       
         <br/>
-        <Route path="/" exact component={ExercisesList} />
+        <Route path="/" exact component={TicketsList} />
+        <Route path="/ticket/add" exact component={CreateTicket}/>
         <Route path="/edit/:id" exact component={EditExercise} />
         <Route path="/create" exact component={CreateExercise} />
         <Route path="/user" exact component={CreateUser} />
