@@ -20,6 +20,9 @@ const Ticket = props => (
             {props.tickets.device.name}
         </td>
         <td>
+            {props.tickets.status}
+        </td>
+        <td>
             <Link to={"/ticket/edit/" + props.tickets._id}>Edit</Link> | <button className="btn btn-default" onClick={() => props.deleteTicket(props.exercise._id)}>Delete</button> 
         </td>
     </tr>
@@ -67,7 +70,7 @@ export default class TicketsList extends Component {
     render(){
         return (
             <div>
-                <h3>tickets</h3>
+                <h3>Tickets</h3>
                 <table className="table">
                     <thead className="thead-light">
                         <tr>
@@ -76,6 +79,7 @@ export default class TicketsList extends Component {
                             <th>Priority</th>
                             <th>Reported by</th>
                             <th>Device</th>
+                            <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
