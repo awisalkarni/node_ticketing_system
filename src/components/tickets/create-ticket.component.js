@@ -41,10 +41,10 @@ export default class CreateTicket extends Component {
                     selectedUser: res.data.users[0]._id,
 
                     priorities: res.data.priorities,
-                    selectedPriorities: res.data.priorities[0]._id,
+                    selectedPriorities: res.data.priorities.length == 0 ? "" : res.data.priorities[0]._id,
 
                     devices: res.data.devices,
-                    selectedDevices: res.data.devices[0]._id
+                    selectedDevices: res.data.devices.length == 0 ? "" : res.data.devices[0]._id
                 })
 
 

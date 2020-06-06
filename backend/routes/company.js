@@ -9,12 +9,14 @@ router.route('/').get((req, res) => {
 
 router.route('/add').post((req, res) => {
     const name = req.body.name;
-    const color = req.body.color;
+    const comments = req.body.comments;
+    const location = req.body.location;
 
 
     const newCompany = new Company({
-        name,
-        color
+        name: name,
+        comments: comments,
+        location: location
     });
 
     newCompany.save()
@@ -38,7 +40,8 @@ router.route('/update/:id').post((req, res) => {
     Company.findById(req.params.id)
         .then(Company => {
             Company.name = req.body.name;
-            Company.color = req.body.color;
+            Company.comments = req.body.comments;
+            Company.location = req.body.location;
 
             Company.save()
                 .then(() => res.json('Company updated!'))
