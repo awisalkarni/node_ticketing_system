@@ -67,7 +67,9 @@ export default class TicketDetails extends Component {
         console.log(comment);
 
         axios.post(`http://localhost:8080/ticket/${this.state.ticket._id}/comment`, comment, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
-            .then(res => window.location.reload );
+            .then(res => {
+                window.location.reload();
+            });
 
 
     }

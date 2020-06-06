@@ -60,7 +60,7 @@ export default class Register extends Component {
         axios.post('http://localhost:8080/user/register', data)
             .then((res) => {
                 console.log(res)
-                // window.location = '/login'
+                window.location = '/login'
             })
             .catch((err) => console.log(err));
     }
