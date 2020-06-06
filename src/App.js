@@ -6,8 +6,11 @@ import Navbar from "./components/navbar.component";
 import CreateUser from "./components/create-user.component";
 import CreateTicket from "./components/tickets/create-ticket.component";
 import TicketsList from "./components/tickets/ticket-list.component";
+import TicketDetails from "./components/tickets/ticket-details.component";
 import LoginBox from './components/auth/login.component';
 import RegisterBox from './components/auth/register.component';
+import CreatePriority from './components/priorities/create-priority.component';
+import CreateDevice from './components/devices/create-device.component';
 
 
 function App() {
@@ -25,8 +28,12 @@ function App() {
             <Route path="/register" exact component={RegisterBox} />
             <Route path="/logout" exact component={Logout} />
             <Route path="/" exact component={TicketsList} />
+            <Route path="/ticket/:id" exact component={TicketDetails} />
             <Route path="/ticket/add" exact component={CreateTicket} />
+            
             <Route path="/user" exact component={CreateUser} />
+            <Route path="/priority/add" exact component={CreatePriority} />
+            <Route path="/device/add" exact component={CreateDevice} />
           </div>
         </div>
       </div>

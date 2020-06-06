@@ -3,6 +3,7 @@ let Ticket = require('../models/ticket.model');
 let User = require('../models/user.model');
 let Priority = require('../models/priority.model');
 let Device = require('../models/device.model');
+let Comment = require('../models/ticket_comments.model');
 
 router.route('/').get((req, res) => {
     Ticket.find()
@@ -10,6 +11,8 @@ router.route('/').get((req, res) => {
         .then(tickets => res.json(tickets))
         .catch(err => res.status(400).json('Error: ' + err));
 });
+
+
 
 router.route('/add/prepare').get(async (req, res) => {
 
@@ -78,6 +81,24 @@ router.route('/update/:id').post((req, res) => {
                 .catch(err => res.status(400).json('Error: ' + err));
         })
         .catch(err => res.status(400).json('Error: ' + err));
+});
+
+router.route('/:id/comment').post((req, res) => {
+
+    const contents = req.body.contents;
+    const ticketId = req.params.id;
+    const userId = req.body.user;
+
+    const newComment = new Comment({
+        contents: contents,
+        ticket: ticketId,
+        user: userId
+    });
+
+    newComment.save()
+        .then(() => res.json('Comment added!'))
+        .catch(err => res.status(400).json('Error: ' + err));
+    
 });
 
 module.exports = router;

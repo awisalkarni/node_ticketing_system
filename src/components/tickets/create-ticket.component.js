@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 export default class CreateTicket extends Component {
 
@@ -9,9 +10,6 @@ export default class CreateTicket extends Component {
         this.state = {
             title: "",
             description: "",
-
-            users: [],
-            selectedUser: "",
             priorities: [],
             selectedPriorities: "",
             devices: [],
@@ -19,10 +17,10 @@ export default class CreateTicket extends Component {
             token: ""
         }
 
-        this.onChangeUsername = this.onChangeUsername.bind(this);
         this.onChangeTitle = this.onChangeTitle.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
         this.onChangePriority = this.onChangePriority.bind(this);
+        this.onChangeDevices = this.onChangeDevices.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         
@@ -34,11 +32,8 @@ export default class CreateTicket extends Component {
         //get 
         axios.get('http://localhost:8080/ticket/add/prepare', { headers: { 'Authorization': `Bearer ${this.state.token}` } })
             .then(res => {
-                console.log(res.data)
 
                 this.setState({
-                    users: res.data.users,
-                    selectedUser: res.data.users[0]._id,
 
                     priorities: res.data.priorities,
                     selectedPriorities: res.data.priorities.length == 0 ? "" : res.data.priorities[0]._id,
@@ -80,24 +75,25 @@ export default class CreateTicket extends Component {
         this.setState({
             selectedPriorities: e.target.value
         })
-
-        console.log(this.state.selectedPriorities);
     }
 
     onSubmit(e) {
         e.preventDefault();
 
+        
+        const userId = localStorage.getItem('user_id');
+
         const ticket = {
             title: this.state.title,
             description: this.state.description,
             priority: this.state.selectedPriorities,
-            user: this.state.selectedUser,
+            user: userId,
             device: this.state.selectedDevices
         }
 
         console.log(ticket);
 
-        axios.post('http://localhost:8080/ticket/add', ticket)
+        axios.post('http://localhost:8080/ticket/add', ticket, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
             .then(res => console.log(ticket));
 
         // console.log(tickets);
@@ -110,24 +106,6 @@ export default class CreateTicket extends Component {
             <div>
                 <h3>Create new Ticket</h3>
                 <form onSubmit={this.onSubmit}>
-                    <div className="form-group">
-                        <label>Username: </label>
-                        <select
-                            required
-                            className="form-control"
-                            value={this.state.username}
-                            onChange={this.onChangeUsername}>
-                            {
-                                this.state.users.map(user => {
-                                    return <option
-                                        key={user._id}
-                                        value={user._id}>
-                                        {user.username}
-                                    </option>
-                                })
-                            }
-                        </select>
-                    </div>
                     <div className="form-group">
                         <label>Title</label>
                         <input
@@ -150,7 +128,7 @@ export default class CreateTicket extends Component {
                     </div>
 
                     <div className="form-group">
-                        <label>Devices: </label>
+                        <label>Devices: </label> <Link to="/device/add">Add</Link>
                         <select
                             required
                             className="form-control"
@@ -170,7 +148,7 @@ export default class CreateTicket extends Component {
                     </div>
 
                     <div className="form-group">
-                        <label>Priority: </label>
+                        <label>Priority: </label> <Link to="/priority/add">Add</Link>
                         <select
                             required
                             className="form-control"

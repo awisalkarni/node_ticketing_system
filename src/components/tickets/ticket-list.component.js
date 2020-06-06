@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Ticket = props => (
     <tr>
         <td>
-            {props.tickets.title}
+            <Link to={ "/ticket/"+ props.tickets._id } >{props.tickets.title}</Link>
         </td>
         <td>
             {props.tickets.description}
