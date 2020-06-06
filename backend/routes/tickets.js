@@ -7,7 +7,7 @@ let Comment = require('../models/ticket_comments.model');
 
 router.route('/').get((req, res) => {
     Ticket.find()
-        .populate(['priority', 'user', 'device'])
+        .populate(['priority', 'user', 'device', 'comments'])
         .then(tickets => res.json(tickets))
         .catch(err => res.status(400).json('Error: ' + err));
 });
@@ -20,14 +20,14 @@ router.route('/add/prepare').get(async (req, res) => {
         User.find(),
         Priority.find(),
         Device.find()
-    ]).then(([users, priorities, devices])=>{
+    ]).then(([users, priorities, devices]) => {
         res.json({
             'users': users,
             'priorities': priorities,
             'devices': devices
         });
     })
-    .catch(err => { res.status(400).json('error: ' + err) });
+        .catch(err => { res.status(400).json('error: ' + err) });
 
 });
 
@@ -55,7 +55,14 @@ router.route('/add').post((req, res) => {
 });
 
 router.route('/:id').get((req, res) => {
-    Ticket.findOne({_id: req.params.id }).populate(['priority', 'user', 'device'])
+    Ticket.findOne({ _id: req.params.id }).populate(['priority', 'user', 'device',
+        {
+            path: 'comments',
+            populate: {
+                path: 'user'
+            }
+        }
+    ])
         .then(ticket => res.json(ticket))
         .catch(err => res.status(400).json('Error: ' + err));
 });
@@ -91,14 +98,30 @@ router.route('/:id/comment').post((req, res) => {
 
     const newComment = new Comment({
         contents: contents,
-        ticket: ticketId,
+        owner: ticketId,
         user: userId
     });
 
+    const commentId = newComment._id;
+
     newComment.save()
-        .then(() => res.json('Comment added!'))
+        .then(() => {
+            Ticket.findByIdAndUpdate(
+                ticketId,
+                { $push: { comments: commentId } },
+                { new: true, useFindAndModify: false }, function (err, ticket) {
+                    console.log(ticket);
+                    res.json('Comment added');
+                }
+            );
+
+        })
         .catch(err => res.status(400).json('Error: ' + err));
-    
+
+
+
+
+
 });
 
 module.exports = router;

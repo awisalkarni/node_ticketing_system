@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const ticketCommentSchema = new Schema({
     contents: { type: String, required: true },
-    ticket: { type: Schema.Types.ObjectId, ref: "Ticket" },
+    owner: { type: Schema.Types.ObjectId, ref: "Ticket" },
     user: { type: Schema.Types.ObjectId, ref: "User" },
 },
     { timestamps: true }

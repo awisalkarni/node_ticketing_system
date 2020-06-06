@@ -9,10 +9,14 @@ export default class TicketDetails extends Component {
         super(props);
 
         this.deleteTicket = this.deleteTicket.bind(this);
+        this.onChangeReply = this.onChangeReply.bind(this);
+        this.onSubmitReply = this.onSubmitReply.bind(this);
 
         this.state = {
             ticket: [],
-            token: ""
+            token: "", 
+            reply: "",
+            comments: []
         }
     }
 
@@ -25,7 +29,8 @@ export default class TicketDetails extends Component {
             .then(res => {
                 console.log(res.data.priority.name)
                 this.setState({
-                    ticket: res.data
+                    ticket: res.data,
+                    comments: res.data.comments
                 })
             })
             .catch(error => {
@@ -42,8 +47,29 @@ export default class TicketDetails extends Component {
         })
     }
 
+    onChangeReply(e) {
+        this.setState({
+            reply: e.target.value
+        });
+        console.log(this.state.reply)
+    }
+
     onSubmitReply(e){
         e.preventDefault();
+
+        const userId = localStorage.getItem('user_id');
+
+        const comment = {
+           contents: this.state.reply,
+           user: userId
+        }
+
+        console.log(comment);
+
+        axios.post(`http://localhost:8080/ticket/${this.state.ticket._id}/comment`, comment, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
+            .then(res => window.location.reload );
+
+
     }
 
 
@@ -66,6 +92,14 @@ export default class TicketDetails extends Component {
                     </div>
                 </div>
 
+                <div className="comments">
+                    <ul>
+                    { this.state.comments.map((comment) => {
+                        return <li>{comment.contents} by {comment.user.username}</li>
+                    })}
+                    </ul>
+                </div>
+
                 <div className="panel panel-default">
                     <div className="panel-heading">Add reply</div>
 
@@ -78,7 +112,7 @@ export default class TicketDetails extends Component {
                                 <input type="hidden" name="ticket_id" />
 
                                 <div className="form-group">
-                                    <textarea rows="10" id="comment" className="form-control" name="comment"></textarea>
+                                    <textarea onChange={this.onChangeReply} rows="10" id="comment" className="form-control" name="comment"></textarea>
 
 
                                 </div>

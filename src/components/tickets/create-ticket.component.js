@@ -94,11 +94,9 @@ export default class CreateTicket extends Component {
         console.log(ticket);
 
         axios.post('http://localhost:8080/ticket/add', ticket, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
-            .then(res => console.log(ticket));
+            .then(res => window.location = '/');
 
-        // console.log(tickets);
-
-        window.location = '/';
+        
     }
 
     render() {

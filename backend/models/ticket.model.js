@@ -9,6 +9,12 @@ const ticketSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: "User" },
   priority: { type: Schema.Types.ObjectId, ref: "Priority" },
   device: { type: Schema.Types.ObjectId, ref: "Device" },
+  comments: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "TicketComment"
+    }
+  ]
 },
   { timestamps: true }
 
