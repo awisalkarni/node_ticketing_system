@@ -2,7 +2,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Introduction
 
-This is a simple ticket reporting system that was developed using NodeJS and ReactJS. 
+This is a simple ticket reporting system that was developed using NodeJS and ReactJS, MongoDB and ExpressJS
 
 ## Instruction
 
