@@ -4,6 +4,14 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 This is a simple ticket reporting system that was developed using NodeJS and ReactJS. 
 
+## Instruction
+
+- `cd node_ticket_system/backend`
+- `nodemon` to start backend server
+- `cd ..`
+- `npm start` to start frontend service
+
+
 ## Features
 
 1. Login
