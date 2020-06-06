@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 export default class Navbar extends Component {
 
+
   render() {
+
+    const storedJwt = localStorage.getItem('token');
+
+    if (storedJwt == null) {
+      return <Redirect to="/login" />
+    }
+
+
     return (
       <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
         <Link to="/" className="navbar-brand">Ticket System</Link>
@@ -23,12 +32,12 @@ export default class Navbar extends Component {
                 <Link to="/ticket/add" className="dropdown-item">Create Tickets</Link>
               </div>
             </li>
-
-            <li className="navbar-item">
-              <Link to="/ticket/create" className="nav-link">Create Exercise Log</Link>
-            </li>
             <li className="navbar-item">
               <Link to="/users/create" className="nav-link">Users</Link>
+            </li>
+
+            <li className="navbar-item pull-right">
+              <Link to="/logout" className="nav-link">Logout</Link>
             </li>
           </ul>
         </div>

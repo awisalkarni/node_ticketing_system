@@ -16,6 +16,7 @@ export default class CreateTicket extends Component {
             selectedPriorities: "",
             devices: [],
             selectedDevices: "",
+            token: ""
         }
 
         this.onChangeUsername = this.onChangeUsername.bind(this);
@@ -28,8 +29,10 @@ export default class CreateTicket extends Component {
     }
 
     componentDidMount() {
+        this.state.token = localStorage.getItem('token');
+
         //get 
-        axios.get('http://localhost:8080/ticket/add/prepare')
+        axios.get('http://localhost:8080/ticket/add/prepare', { headers: { 'Authorization': `Bearer ${this.state.token}` } })
             .then(res => {
                 console.log(res.data)
 

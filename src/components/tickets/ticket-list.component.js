@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Ticket = props => (
     <tr>
@@ -23,24 +23,29 @@ const Ticket = props => (
             {props.tickets.status}
         </td>
         <td>
-            <Link to={"/ticket/edit/" + props.tickets._id}>Edit</Link> | <button className="btn btn-default" onClick={() => props.deleteTicket(props.exercise._id)}>Delete</button> 
+            <Link to={"/ticket/edit/" + props.tickets._id}>Edit</Link> | <button className="btn btn-default" onClick={() => props.deleteTicket(props.tickets._id)}>Delete</button>
         </td>
     </tr>
 )
 
 export default class TicketsList extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.deleteTicket = this.deleteTicket.bind(this);
 
-        this.state = {tickets: []}
+        this.state = { 
+            tickets: [], 
+            token: ""
+        }
     }
 
-    componentDidMount(){
+    componentDidMount() {
 
-        axios.get('http://localhost:8080/ticket/')
+        this.state.token = localStorage.getItem('token');
+
+        axios.get('http://localhost:8080/ticket/', { headers: { 'Authorization': `Bearer ${this.state.token}` } })
             .then(res => {
                 console.log(res.data)
                 this.setState({
@@ -52,8 +57,8 @@ export default class TicketsList extends Component {
             })
     }
 
-    deleteTicket(id){
-        axios.delete('http://localhost:8080/ticket/'+id)
+    deleteTicket(id) {
+        axios.delete('http://localhost:8080/ticket/' + id, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
             .then(res => console.log(res.data));
 
         this.setState({
@@ -61,13 +66,13 @@ export default class TicketsList extends Component {
         })
     }
 
-    ticketList(){
+    ticketList() {
         return this.state.tickets.map(currentTicket => {
             return <Ticket tickets={currentTicket} deleteTicket={this.deleteTicket} key={currentTicket._id} />
         })
     }
 
-    render(){
+    render() {
         return (
             <div>
                 <h3>Tickets</h3>

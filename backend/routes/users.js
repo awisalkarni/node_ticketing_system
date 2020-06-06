@@ -30,16 +30,18 @@ router.route('/add').post((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/login').get(async (req, res) => {
+router.route('/login').post(async (req, res) => {
 
   const username = req.body.username;
   const password = req.body.password;
-  const user = await User.findOne({ username: username })
+  await User.findOne({ username: username })
   .then((user) => {
 
     if (user && bcrypt.compareSync(password, user.password)) {
       const token = jwt.sign({ sub: user.id }, config.secret);
       res.json({ user: user, token: token });
+    } else {
+      res.status(401).json('Invalid username or password');
     }
 
     
