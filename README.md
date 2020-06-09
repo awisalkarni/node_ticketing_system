@@ -54,4 +54,5 @@ This is a simple ticket reporting system that was developed using NodeJS and Rea
 1. Using cookies and CSRF protection for storing jwt token to prevent XSS attack
 2. Add user roles for technical support officers, admins and clients.
 3. Add admin panel to manage locations, zones, devices, priorities and users.
-5. Add dashboard for quick stats
+4. Add dashboard for quick stats
+5. Asset management system
