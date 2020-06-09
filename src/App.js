@@ -11,6 +11,8 @@ import LoginBox from './components/auth/login.component';
 import RegisterBox from './components/auth/register.component';
 import CreatePriority from './components/priorities/create-priority.component';
 import CreateDevice from './components/devices/create-device.component';
+import PriorityList from './components/priorities/priority-list.component';
+import DeviceList from './components/devices/device-list.component';
 
 
 function App() {
@@ -32,7 +34,10 @@ function App() {
             <Route path="/ticket/add" exact component={CreateTicket} />
             <Route path="/ticket/detail/:id" exact component={TicketDetails} />
             <Route path="/user" exact component={CreateUser} />
+
+            <Route path="/priority" exact component={PriorityList} />
             <Route path="/priority/add" exact component={CreatePriority} />
+            <Route path="/device" exact component={DeviceList} />
             <Route path="/device/add" exact component={CreateDevice} />
           </div>
         </div>
