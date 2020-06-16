@@ -2,7 +2,7 @@ const router = require('express').Router();
 let Location = require('../models/location.model');
 
 router.route('/').get((req, res) => {
-    Location.find()
+    Location.find().populate('zone')
         .then(locations => res.json(locations))
         .catch(err => res.status(400).json('Error: ' + err));
 });

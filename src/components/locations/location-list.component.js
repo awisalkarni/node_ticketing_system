@@ -8,8 +8,7 @@ const Location = props => {
     <tr>
       <td>{props.location._id}</td>
       <td>{props.location.name}</td>
-      <td>{props.location.comments}</td>
-      <td>{props.location.location} <Link>Manage Location</Link></td>
+      <td>{props.location.zone.name} <Link>Manage Zone</Link></td>
     </tr>
   )
 
@@ -60,6 +59,7 @@ class LocationList extends Component {
       <table className="table">
         <thead className="thead-light">
           <tr>
+          <td>ID</td>
           <td>Name</td>
           <td>Zone</td>
           </tr>

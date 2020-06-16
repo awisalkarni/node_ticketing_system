@@ -2,7 +2,7 @@ const router = require('express').Router();
 let Zone = require('../models/zone.model');
 
 router.route('/').get((req, res) => {
-    Zone.find()
+    Zone.find().populate('company')
         .then(zones => res.json(zones))
         .catch(err => res.status(400).json('Error: ' + err));
 });

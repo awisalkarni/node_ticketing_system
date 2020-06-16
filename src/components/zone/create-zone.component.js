@@ -9,6 +9,7 @@ class CreateZone extends Component {
         this.state = {
             name: "",
             company: "",
+            companies: [],
         }
 
         this.onChangeName = this.onChangeName.bind(this);
@@ -19,7 +20,13 @@ class CreateZone extends Component {
     }
 
     componentDidMount() {
-        
+        axios.get('http://localhost:8080/company',{ headers: { 'Authorization': `Bearer ${this.state.token}` } })
+        .then((res) => {
+            this.setState({
+                companies: res.data
+            })
+        })
+        .catch((err) => console.log(err))
     }
 
     onChangeName(e) {
@@ -69,13 +76,9 @@ class CreateZone extends Component {
                     <div className="form-group">
                         <label for="name">Name</label>
                         <select className="form-control" onChange={this.onChangeCompany} value={this.state.company}>
-                            <option value="">Select company</option>
-                            <option value="#FFF">White</option>
-                            <option value="#000">Black</option>
-                            <option value="#FF0000">Red</option>
-                            <option value="#28B463">Green</option>
-                            <option value="#2E86C1">Blue</option>
-                            <option value="#D35400">Orange</option>
+                            { this.state.companies.map((company) => {
+                                return <option key={company._id} value={ company._id }>{ company.name }</option>
+                            }) }
                         </select>
                     </div>
 

@@ -9,6 +9,7 @@ class CreateLocation extends Component {
         this.state = {
             name: "",
             zone: "",
+            zones: []
         }
 
         this.onChangeName = this.onChangeName.bind(this);
@@ -19,6 +20,17 @@ class CreateLocation extends Component {
     }
 
     componentDidMount() {
+
+        axios.get('http://localhost:8080/zone', {headers: { 'Authorization': `Bearer ${this.state.token}` }})
+        .then((res) => {
+            this.setState({
+                zones: res.data,
+                zone: res.data.length > 0 ? res.data[0]._id : ""
+            })
+        })
+        .catch((err) => {
+            console.log(err)
+        })
         
     }
 
@@ -46,11 +58,11 @@ class CreateLocation extends Component {
 
         }
 
-        axios.post('http://localhost:8080/priority/add', priority, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
+        axios.post('http://localhost:8080/location/add', priority, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
             .then((res) => console.log(res))
             .catch((err) => console.log(err));
         
-        window.location = '/ticket/add';
+        window.location = '/location';
 
         
     }
@@ -69,13 +81,9 @@ class CreateLocation extends Component {
                     <div className="form-group">
                         <label for="name">Zone</label>
                         <select className="form-control" onChange={this.onChangeZone} value={this.state.zone}>
-                            <option value="">Select zone</option>
-                            <option value="#FFF">White</option>
-                            <option value="#000">Black</option>
-                            <option value="#FF0000">Red</option>
-                            <option value="#28B463">Green</option>
-                            <option value="#2E86C1">Blue</option>
-                            <option value="#D35400">Orange</option>
+                            { this.state.zones.map((zone) => {
+                                return <option key={zone._id} value={zone._id} >{ zone.name }</option>
+                            }) }
                         </select>
                     </div>
 

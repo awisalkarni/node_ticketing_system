@@ -7,7 +7,8 @@ const Zone = props => {
   return (
     <tr>
       <td>{props.zone._id}</td>
-      <td>{props.zone.company} <Link>Manage Company</Link></td>
+      <td>{props.zone.name}</td>
+      <td>{props.zone.company.name } <Link>Manage Company</Link></td>
     </tr>
   )
 
@@ -58,6 +59,7 @@ class ZoneList extends Component {
       <table className="table">
         <thead className="thead-light">
           <tr>
+          <td>ID</td>
           <td>Name</td>
           <td>Company</td>
           </tr>
