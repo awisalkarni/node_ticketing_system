@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 
 
 export default class TicketDetails extends Component {
@@ -14,15 +13,16 @@ export default class TicketDetails extends Component {
 
         this.state = {
             ticket: [],
-            token: "", 
+            token: "",
             reply: "",
             comments: []
         }
+        this.state.token = localStorage.getItem('token');
     }
 
     componentDidMount() {
 
-        this.state.token = localStorage.getItem('token');
+
         const id = this.props.match.params.id;
 
         axios.get('http://localhost:8080/ticket/' + id, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
@@ -54,14 +54,14 @@ export default class TicketDetails extends Component {
         console.log(this.state.reply)
     }
 
-    onSubmitReply(e){
+    onSubmitReply(e) {
         e.preventDefault();
 
         const userId = localStorage.getItem('user_id');
 
         const comment = {
-           contents: this.state.reply,
-           user: userId
+            contents: this.state.reply,
+            user: userId
         }
 
         console.log(comment);
@@ -96,9 +96,9 @@ export default class TicketDetails extends Component {
 
                 <div className="comments">
                     <ul>
-                    { this.state.comments.map((comment) => {
-                        return <li>{comment.contents} by {comment.user.username}</li>
-                    })}
+                        {this.state.comments.map((comment) => {
+                            return <li>{comment.contents} by {comment.user.username}</li>
+                        })}
                     </ul>
                 </div>
 

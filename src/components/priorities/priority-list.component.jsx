@@ -24,10 +24,11 @@ class PriorityList extends Component {
       priorities: [],
       token: ""
     }
+    this.state.token = localStorage.getItem("token");
   }
 
   componentWillMount() {
-    this.state.token = localStorage.getItem("token");
+    
 
     axios.get('http://localhost:8080/priority', { headers: { 'Authorization': `Bearer ${this.state.token}` } })
       .then((res) => {
@@ -54,7 +55,7 @@ class PriorityList extends Component {
 
   render() {
     return <div>
-      <h1>Priorities</h1>
+      <h1>Priorities <Link className="btn btn-primary btn-sm" to="/priority/add">Add</Link></h1>
       <table className="table">
         <thead className="thead-light">
           <tr>

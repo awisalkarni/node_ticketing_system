@@ -15,11 +15,11 @@ export default class CreatePriority extends Component {
         this.onChangeColor = this.onChangeColor.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
-        
+        this.state.token = localStorage.getItem('token');
     }
 
     componentDidMount() {
-        this.state.token = localStorage.getItem('token');
+        
     }
 
     onChangeName(e) {

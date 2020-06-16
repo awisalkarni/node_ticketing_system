@@ -22,12 +22,12 @@ export default class CreateTicket extends Component {
         this.onChangePriority = this.onChangePriority.bind(this);
         this.onChangeDevices = this.onChangeDevices.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-
+        this.state.token = localStorage.getItem('token');
         
     }
 
     componentDidMount() {
-        this.state.token = localStorage.getItem('token');
+        
 
         //get 
         axios.get('http://localhost:8080/ticket/add/prepare', { headers: { 'Authorization': `Bearer ${this.state.token}` } })
@@ -36,10 +36,10 @@ export default class CreateTicket extends Component {
                 this.setState({
 
                     priorities: res.data.priorities,
-                    selectedPriorities: res.data.priorities.length == 0 ? "" : res.data.priorities[0]._id,
+                    selectedPriorities: res.data.priorities.length === 0 ? "" : res.data.priorities[0]._id,
 
                     devices: res.data.devices,
-                    selectedDevices: res.data.devices.length == 0 ? "" : res.data.devices[0]._id
+                    selectedDevices: res.data.devices.length === 0 ? "" : res.data.devices[0]._id
                 })
 
 

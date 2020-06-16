@@ -10,7 +10,7 @@ const Device = props => {
       <td>{props.device._id}</td>
       <td>{props.device.name}</td>
       <td>{props.device.comments}</td>
-      <td>{props.device.location}</td>
+      <td>{props.device.location} <Link>Manage Location</Link></td>
     </tr>
   )
 
@@ -25,10 +25,12 @@ class DeviceList extends Component {
       devices: [],
       token: ""
     }
+
+    this.state.token = localStorage.getItem("token");
   }
 
   componentWillMount() {
-    this.state.token = localStorage.getItem("token");
+    
 
     axios.get('http://localhost:8080/device', { headers: { 'Authorization': `Bearer ${this.state.token}` } })
       .then((res) => {
@@ -55,11 +57,10 @@ class DeviceList extends Component {
 
   render() {
     return <div>
-      <h1>devices</h1>
+      <h1>Devices <Link className="btn btn-primary btn-sm" to="/device/add">Add</Link></h1>
       <table className="table">
         <thead className="thead-light">
           <tr>
-          <td>id</td>
           <td>Name</td>
           <td>Comments</td>
           <td>Location</td>

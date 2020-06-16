@@ -68,8 +68,6 @@ router.route('/register').post(async (req, res) => {
 
     console.log(existingCompany);
 
-
-
     if (existingCompany == null) {
       
       const newCompany = new Company({
