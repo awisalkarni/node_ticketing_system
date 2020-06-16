@@ -97,26 +97,20 @@ export default class TicketDetails extends Component {
                 <div className="comments">
                     <ul>
                         {this.state.comments.map((comment) => {
-                            return <li>{comment.contents} by {comment.user.username}</li>
+                            return <li>{comment.contents} by {comment.user.username} on {comment.createdAt}</li>
                         })}
                     </ul>
                 </div>
 
                 <div className="panel panel-default">
                     <div className="panel-heading">Add reply</div>
-
                     <div className="panel-body">
                         <div className="comment-form">
 
                             <form onSubmit={this.onSubmitReply} className="form">
-
-
                                 <input type="hidden" name="ticket_id" />
-
                                 <div className="form-group">
                                     <textarea onChange={this.onChangeReply} rows="10" id="comment" className="form-control" name="comment"></textarea>
-
-
                                 </div>
 
                                 <div className="form-group">
@@ -126,9 +120,6 @@ export default class TicketDetails extends Component {
                         </div>
                     </div>
                 </div>
-
-
-
             </div>
         );
     }

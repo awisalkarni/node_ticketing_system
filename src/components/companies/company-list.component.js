@@ -1,28 +1,25 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import './device.css';
 
-const Device = props => {
+const Company = props => {
 
   return (
     <tr>
-      <td>{props.device._id}</td>
-      <td>{props.device.name}</td>
-      <td>{props.device.comments}</td>
-      <td>{props.device.location} <Link>Manage Location</Link></td>
+      <td>{props.company._id}</td>
+      <td>{props.company.name}</td>
     </tr>
   )
 
 }
 
-class DeviceList extends Component {
+class CompanyList extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      devices: [],
+      companies: [],
       token: ""
     }
 
@@ -32,23 +29,23 @@ class DeviceList extends Component {
   componentWillMount() {
     
 
-    axios.get('http://localhost:8080/device', { headers: { 'Authorization': `Bearer ${this.state.token}` } })
+    axios.get('http://localhost:8080/company', { headers: { 'Authorization': `Bearer ${this.state.token}` } })
       .then((res) => {
 
         console.log(res.data)
         this.setState({
-          devices: res.data
+          companies: res.data
         });
 
       })
       .catch((err) => console.log(err))
   }
 
-  deviceList() {
+  companyList() {
 
-    return this.state.devices.map((device) => {
+    return this.state.companies.map((company) => {
 
-      return <Device device={device} key={device._id} />;
+      return <Company company={company} key={company._id} />;
 
     });
 
@@ -57,22 +54,22 @@ class DeviceList extends Component {
 
   render() {
     return <div>
-      <h1>Devices <Link className="btn btn-primary btn-sm" to="/device/add">Add</Link></h1>
+      <h1>Companies <Link className="btn btn-primary btn-sm" to="/company/add">Add</Link></h1>
       <table className="table">
         <thead className="thead-light">
           <tr>
           <td>ID</td>
           <td>Name</td>
-          <td>Comments</td>
-          <td>Location</td>
           </tr>
         </thead>
         <tbody>
-          {this.deviceList()}
+          {this.companyList()}
         </tbody>
       </table>
     </div>;
   }
 }
 
-export default DeviceList;
+
+
+export default CompanyList;

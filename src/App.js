@@ -13,6 +13,12 @@ import CreatePriority from './components/priorities/create-priority.component';
 import CreateDevice from './components/devices/create-device.component';
 import PriorityList from './components/priorities/priority-list.component';
 import DeviceList from './components/devices/device-list.component';
+import LocationList from './components/locations/location-list.component';
+import CreateLocation from './components/locations/create-location.component';
+import CreateZone from './components/zone/create-zone.component';
+import ZoneList from './components/zone/zone-list.component';
+import CompanyList from './components/companies/company-list.component';
+import CreateCompany from './components/companies/create-company.component';
 
 
 function App() {
@@ -33,12 +39,23 @@ function App() {
             
             <Route path="/ticket/add" exact component={CreateTicket} />
             <Route path="/ticket/detail/:id" exact component={TicketDetails} />
+            
             <Route path="/user" exact component={CreateUser} />
 
             <Route path="/priority" exact component={PriorityList} />
             <Route path="/priority/add" exact component={CreatePriority} />
+            
             <Route path="/device" exact component={DeviceList} />
             <Route path="/device/add" exact component={CreateDevice} />
+
+            <Route path="/location/add" exact component={CreateLocation} />
+            <Route path="/location/" exact component={LocationList} />
+
+            <Route path="/zone/add" exact component={CreateZone} />
+            <Route path="/zone/" exact component={ZoneList} />
+
+            <Route path="/company/" exact component={CompanyList} />
+            <Route path="/company/add" exact component={CreateCompany} />
           </div>
         </div>
       </div>
