@@ -10,7 +10,8 @@ const Device = props => {
       <td>{props.device._id}</td>
       <td>{props.device.name}</td>
       <td>{props.device.comments}</td>
-      <td>{props.device.location} <Link>Manage Location</Link></td>
+      <td>{props.device.location.name} <Link to="location">Manage Location</Link></td>
+      <td><button className="btn btn-danger" onClick={ () => props.deleteDevice(props.device._id) }>Delete</button></td>
     </tr>
   )
 
@@ -20,6 +21,8 @@ class DeviceList extends Component {
 
   constructor(props) {
     super(props);
+
+    this.deleteDevice = this.deleteDevice.bind(this);
 
     this.state = {
       devices: [],
@@ -44,11 +47,25 @@ class DeviceList extends Component {
       .catch((err) => console.log(err))
   }
 
+  deleteDevice(id) {
+
+    axios.delete('http://localhost:8080/device/' + id, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
+      .then((res) => {
+        console.log(res.data)
+        this.setState({
+          devices: this.state.devices.filter((el) => el._id !== id)
+        });
+      })
+      .catch((err) => console.log(err));
+
+    
+  }
+
   deviceList() {
 
     return this.state.devices.map((device) => {
 
-      return <Device device={device} key={device._id} />;
+      return <Device device={device} key={device._id} deleteDevice={this.deleteDevice} />;
 
     });
 

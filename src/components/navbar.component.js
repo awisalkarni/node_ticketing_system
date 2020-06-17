@@ -38,15 +38,26 @@ export default class Navbar extends Component {
               </a>
               <div className="dropdown-menu" aria-labelledby="navbarDropdown">                
                 <Link to="/company" className="dropdown-item">Companies</Link>
-                <Link to="/location" className="dropdown-item">Locations</Link>
                 <Link to="/zone" className="dropdown-item">Zones</Link>
-                <Link to="/priority" className="dropdown-item">Priorities</Link>
+                <Link to="/location" className="dropdown-item">Locations</Link>
                 <Link to="/device" className="dropdown-item">Devices</Link>
               </div>
             </li>
 
+            <li className="nav-item dropdown">
+              <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Settings
+              </a>
+
+              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+              <Link to="/priority" className="dropdown-item">Priorities</Link>
+              <Link to="/user" className="dropdown-item">Users</Link>
+              </div>
+              
+            </li>
+
             <li className="navbar-item">
-              <Link to="/user" className="nav-link">Users</Link>
+              
             </li>
 
             <li className="navbar-item pull-right">

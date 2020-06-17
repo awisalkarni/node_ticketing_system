@@ -2,7 +2,7 @@ const router = require('express').Router();
 let Zone = require('../models/zone.model');
 
 router.route('/').get((req, res) => {
-    Zone.find().populate('company')
+    Zone.find().populate(['company'])
         .then(zones => res.json(zones))
         .catch(err => res.status(400).json('Error: ' + err));
 });
@@ -13,8 +13,8 @@ router.route('/add').post((req, res) => {
 
 
     const newZone = new Zone({
-        name,
-        company,
+        name: name,
+        company: company,
     });
 
     newZone.save()

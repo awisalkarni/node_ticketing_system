@@ -8,7 +8,8 @@ const Zone = props => {
     <tr>
       <td>{props.zone._id}</td>
       <td>{props.zone.name}</td>
-      <td>{props.zone.company.name } <Link>Manage Company</Link></td>
+      <td>{props.zone.company.name} <Link to="/company">Manage Company</Link></td>
+      <td><button className="btn btn-danger" onClick={() => props.deleteZone(props.zone._id) }>Delete</button></td>
     </tr>
   )
 
@@ -19,6 +20,8 @@ class ZoneList extends Component {
   constructor(props) {
     super(props);
 
+    this.deleteZone = this.deleteZone.bind(this);
+
     this.state = {
       zones: [],
       token: ""
@@ -28,7 +31,7 @@ class ZoneList extends Component {
   }
 
   componentWillMount() {
-    
+
 
     axios.get('http://localhost:8080/zone', { headers: { 'Authorization': `Bearer ${this.state.token}` } })
       .then((res) => {
@@ -42,11 +45,25 @@ class ZoneList extends Component {
       .catch((err) => console.log(err))
   }
 
+  deleteZone(id) {
+
+    axios.delete('http://localhost:8080/zone/' + id, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
+      .then(res => {
+        console.log(res)
+        this.setState({
+          zones: this.state.zones.filter(el => el._id !== id)
+        })
+      });
+
+    
+
+  }
+
   zoneList() {
 
     return this.state.zones.map((zone) => {
 
-      return <Zone zone={zone} key={zone._id} />;
+      return <Zone zone={zone} key={zone._id} deleteZone={this.deleteZone} />;
 
     });
 
@@ -59,9 +76,10 @@ class ZoneList extends Component {
       <table className="table">
         <thead className="thead-light">
           <tr>
-          <td>ID</td>
-          <td>Name</td>
-          <td>Company</td>
+            <td>ID</td>
+            <td>Name</td>
+            <td>Company</td>
+            <td>Actions</td>
           </tr>
         </thead>
         <tbody>

@@ -19,6 +19,10 @@ export default class CreatePriority extends Component {
     }
 
     componentDidMount() {
+
+        this.setState({
+            color: "#FFF"
+        })
         
     }
 
@@ -47,10 +51,12 @@ export default class CreatePriority extends Component {
         }
 
         axios.post('http://localhost:8080/priority/add', priority, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
-            .then((res) => console.log(res))
+            .then((res) => {
+                window.location = '/ticket/add';
+            })
             .catch((err) => console.log(err));
         
-        window.location = '/ticket/add';
+        
 
         
     }
@@ -62,14 +68,13 @@ export default class CreatePriority extends Component {
                 <form onSubmit={this.onSubmit}>
 
                     <div className="form-group">
-                        <label for="name">Name</label>
+                        <label htmlFor="name">Name</label>
                         <input type="text" className="form-control" onChange={this.onChangeName} value={this.state.name} />
                     </div>
 
                     <div className="form-group">
-                        <label for="name">Name</label>
+                        <label htmlFor="name">Name</label>
                         <select className="form-control" onChange={this.onChangeColor} value={this.state.color}>
-                            <option value="">Select Color</option>
                             <option value="#FFF">White</option>
                             <option value="#000">Black</option>
                             <option value="#FF0000">Red</option>

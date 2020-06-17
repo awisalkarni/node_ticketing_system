@@ -9,16 +9,28 @@ export default class CreateDevice extends Component {
         this.state = {
             name: "",
             comments: "",
+            locations: [],
+            locationId: ""
         }
 
         this.onChangeName = this.onChangeName.bind(this);
         this.onChangeComments = this.onChangeComments.bind(this);
+        this.onChangeLocation = this.onChangeLocation.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state.token = localStorage.getItem('token');
     }
 
     componentDidMount() {
+
+        axios.get('http://localhost:8080/location', {headers: {'Authorization': `Bearer ${this.state.token}` } })
+        .then((res) => {
+            this.setState({
+                locations: res.data,
+                locationId: (res.data.length > 0) ? res.data[0]._id : ""
+            })
+        })
+        .catch((err) => console.log(err))
         
     }
 
@@ -34,6 +46,11 @@ export default class CreateDevice extends Component {
         })
     }
 
+    onChangeLocation(e) {
+        this.setState({
+            locationId: e.target.value
+        });
+    }
     
 
     onSubmit(e) {
@@ -42,7 +59,8 @@ export default class CreateDevice extends Component {
         const device = {
 
             name: this.state.name,
-            comments: this.state.Comments
+            comments: this.state.comments,
+            location: this.state.locationId
 
         }
 
@@ -50,7 +68,7 @@ export default class CreateDevice extends Component {
             .then((res) => console.log(res))
             .catch((err) => console.log(err));
 
-        window.location = '/ticket/add';
+        window.location = '/device';
         
     }
 
@@ -61,17 +79,26 @@ export default class CreateDevice extends Component {
                 <form onSubmit={this.onSubmit}>
 
                     <div className="form-group">
-                        <label for="name">Name</label>
+                        <label htmlFor="name">Name</label>
                         <input type="text" className="form-control" onChange={this.onChangeName} value={this.state.name} />
                     </div>
 
                     <div className="form-group">
-                        <label for="comments">Comments</label>
+                        <label htmlFor="comments">Comments</label>
                         <input type="text" className="form-control" onChange={this.onChangeComments} value={this.state.comments} />
                     </div>
 
                     <div className="form-group">
-                        <input type="submit" value="Create Priority" className="btn btn-primary"/>
+                        <label>Location</label>
+                        <select className="form-control" onChange={this.onChangeLocation} value={this.state.locationId}>
+                            { this.state.locations.map((location) => {
+                                return <option key={location._id} value={location._id}>{location.name}</option>
+                            }) }
+                        </select>
+                    </div>
+
+                    <div className="form-group">
+                        <input type="submit" value="Create Device" className="btn btn-primary"/>
                     </div>
 
                 </form>

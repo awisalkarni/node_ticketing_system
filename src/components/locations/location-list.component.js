@@ -8,7 +8,7 @@ const Location = props => {
     <tr>
       <td>{props.location._id}</td>
       <td>{props.location.name}</td>
-      <td>{props.location.zone.name} <Link>Manage Zone</Link></td>
+      <td>{props.location.zone.name} <Link to="/zone">Manage Zone</Link></td>
     </tr>
   )
 
@@ -46,9 +46,22 @@ class LocationList extends Component {
 
     return this.state.locations.map((location) => {
 
-      return <Location location={location} key={location._id} />;
+      return <Location location={location} key={location._id} deleteLocation={this.deleteLocation}/>;
 
     });
+
+  }
+
+  deleteLocation(id) {
+
+    axios.delete('http://localhost:8080/location/' + id, {headers: {'Authorization': `Bearer ${this.state.token}`}})
+    .then((res) => {
+      console.log(res.data);
+      this.setState({
+        locations: this.state.locations.filter((el) => el._id !== id)
+      })
+    })
+    .catch(err => console.log(err));
 
   }
 

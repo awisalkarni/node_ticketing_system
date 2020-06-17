@@ -13,8 +13,8 @@ router.route('/add').post((req, res) => {
 
 
     const newPriority = new Priority({
-        name,
-        color
+        name: name,
+        color: color
     });
 
     newPriority.save()

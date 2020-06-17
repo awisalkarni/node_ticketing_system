@@ -2,7 +2,7 @@ const router = require('express').Router();
 let Device = require('../models/device.model');
 
 router.route('/').get((req, res) => {
-    Device.find()
+    Device.find().populate('location')
         .then(devices => res.json(devices))
         .catch(err => res.status(400).json('Error: ' + err));
 });

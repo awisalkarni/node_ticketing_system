@@ -8,7 +8,7 @@ class CreateZone extends Component {
 
         this.state = {
             name: "",
-            company: "",
+            companyId: "",
             companies: [],
         }
 
@@ -23,7 +23,8 @@ class CreateZone extends Component {
         axios.get('http://localhost:8080/company',{ headers: { 'Authorization': `Bearer ${this.state.token}` } })
         .then((res) => {
             this.setState({
-                companies: res.data
+                companies: res.data,
+                companyId: (res.data.length > 0) ? res.data[0]._id : ""
             })
         })
         .catch((err) => console.log(err))
@@ -37,7 +38,7 @@ class CreateZone extends Component {
 
     onChangeCompany(e) {
         this.setState({
-            company: e.target.value
+            companyId: e.target.value
         })
     }
 
@@ -49,7 +50,7 @@ class CreateZone extends Component {
         const zone = {
 
             name: this.state.name,
-            company: this.state.company
+            company: this.state.companyId
 
         }
 
@@ -57,7 +58,7 @@ class CreateZone extends Component {
             .then((res) => console.log(res))
             .catch((err) => console.log(err));
         
-        window.location = '/ticket/add';
+        window.location = '/zone';
 
         
     }
@@ -69,12 +70,12 @@ class CreateZone extends Component {
                 <form onSubmit={this.onSubmit}>
 
                     <div className="form-group">
-                        <label for="name">Name</label>
+                        <label>Name</label>
                         <input type="text" className="form-control" onChange={this.onChangeName} value={this.state.name} />
                     </div>
 
                     <div className="form-group">
-                        <label for="name">Name</label>
+                        <label>Name</label>
                         <select className="form-control" onChange={this.onChangeCompany} value={this.state.company}>
                             { this.state.companies.map((company) => {
                                 return <option key={company._id} value={ company._id }>{ company.name }</option>
