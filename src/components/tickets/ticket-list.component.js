@@ -77,7 +77,7 @@ export default class TicketsList extends Component {
     render() {
         return (
             <div>
-                <h3>Tickets</h3>
+                <h3>Tickets <Link className="btn btn-primary" to="/ticket/add">Add</Link></h3>
                 <table className="table">
                     <thead className="thead-light">
                         <tr>

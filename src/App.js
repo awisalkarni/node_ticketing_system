@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./components/navbar.component";
-import CreateUser from "./components/create-user.component";
+import CreateUser from "./components/users/create-user.component";
 import CreateTicket from "./components/tickets/create-ticket.component";
 import TicketsList from "./components/tickets/ticket-list.component";
 import TicketDetails from "./components/tickets/ticket-details.component";
@@ -41,7 +41,8 @@ function App() {
             <Route path="/ticket/detail/:id" exact component={TicketDetails} />
             
             <Route path="/user" exact component={CreateUser} />
-
+            <Route path="/user/add" exact component={CreateUser} />
+          
             <Route path="/priority" exact component={PriorityList} />
             <Route path="/priority/add" exact component={CreatePriority} />
             
