@@ -30,7 +30,7 @@ class PriorityList extends Component {
   componentWillMount() {
     
 
-    axios.get('http://localhost:8080/priority', { headers: { 'Authorization': `Bearer ${this.state.token}` } })
+    axios.get('/api/priority', { headers: { 'Authorization': `Bearer ${this.state.token}` } })
       .then((res) => {
 
         console.log(res.data)

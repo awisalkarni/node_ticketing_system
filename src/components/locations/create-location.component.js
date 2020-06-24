@@ -21,7 +21,7 @@ class CreateLocation extends Component {
 
     componentDidMount() {
 
-        axios.get('http://localhost:8080/zone', {headers: { 'Authorization': `Bearer ${this.state.token}` }})
+        axios.get('/api/zone', {headers: { 'Authorization': `Bearer ${this.state.token}` }})
         .then((res) => {
             this.setState({
                 zones: res.data,
@@ -58,7 +58,7 @@ class CreateLocation extends Component {
 
         }
 
-        axios.post('http://localhost:8080/location/add', priority, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
+        axios.post('/api/location/add', priority, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
             .then((res) => console.log(res))
             .catch((err) => console.log(err));
         

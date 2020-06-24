@@ -50,7 +50,7 @@ export default class CreatePriority extends Component {
 
         }
 
-        axios.post('http://localhost:8080/priority/add', priority, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
+        axios.post('/api/priority/add', priority, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
             .then((res) => {
                 window.location = '/ticket/add';
             })

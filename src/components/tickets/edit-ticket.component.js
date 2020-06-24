@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-export default class CreateTicket extends Component {
+export default class EditTicket extends Component {
 
     constructor(props) {
         super(props);
@@ -14,7 +14,9 @@ export default class CreateTicket extends Component {
             selectedPriorities: "",
             devices: [],
             selectedDevices: "",
-            token: ""
+            token: "",
+            id: "",
+            status: ""
         }
 
         this.onChangeTitle = this.onChangeTitle.bind(this);
@@ -23,10 +25,23 @@ export default class CreateTicket extends Component {
         this.onChangeDevices = this.onChangeDevices.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.state.token = localStorage.getItem('token');
+        this.state.id = props.match.params.id;
         
     }
 
     componentDidMount() {
+        axios.get('/api/ticket/' + this.state.id,  { headers: { 'Authorization': `Bearer ${this.state.token}` } })
+            .then(res => {
+                this.setState({
+                    title: res.data.title,
+                    description: res.data.description,
+                    selectedPriorities: res.data.priority._id,
+                    selectedDevices: res.data.device._id,
+                    status: res.data.status
+                })
+
+            })
+            .catch(err => console.log(err));
         
 
         //get 
@@ -80,23 +95,17 @@ export default class CreateTicket extends Component {
     onSubmit(e) {
         e.preventDefault();
 
-        
-        const userId = localStorage.getItem('user_id');
-
         const ticket = {
             title: this.state.title,
             description: this.state.description,
             priority: this.state.selectedPriorities,
-            user: userId,
-            device: this.state.selectedDevices
+            device: this.state.selectedDevices,
+            status: this.state.status
         }
 
-        console.log(ticket);
-
-        axios.post('/api/ticket/add', ticket, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
-            .then(res => window.location = '/');
-
-        
+        axios.post('/api/ticket/update/' + this.state.id, ticket, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
+            .then(res => window.location = '/ticket/detail/' + this.state.id)
+            .catch(err => console.log(err));
     }
 
     render() {
@@ -166,7 +175,7 @@ export default class CreateTicket extends Component {
                     </div>
 
                     <div className="form-group">
-                        <input type="submit" value="Create Ticket" className="btn btn-primary"/>
+                        <input type="submit" value="Update" className="btn btn-primary"/>
                     </div>
 
                 </form>

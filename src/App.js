@@ -19,6 +19,7 @@ import CreateZone from './components/zone/create-zone.component';
 import ZoneList from './components/zone/zone-list.component';
 import CompanyList from './components/companies/company-list.component';
 import CreateCompany from './components/companies/create-company.component';
+import EditTicket from './components/tickets/edit-ticket.component';
 
 
 function App() {
@@ -38,7 +39,9 @@ function App() {
             <Route path="/" exact component={TicketsList} />
             
             <Route path="/ticket/add" exact component={CreateTicket} />
+            <Route path="/ticket/edit/:id" exact component={EditTicket} />
             <Route path="/ticket/detail/:id" exact component={TicketDetails} />
+            
             
             <Route path="/user" exact component={CreateUser} />
             <Route path="/user/add" exact component={CreateUser} />

@@ -17,13 +17,14 @@ const Ticket = props => (
             {props.tickets.user.username}
         </td>
         <td>
-            {props.tickets.device.name}
+            { (props.tickets.device) ? props.tickets.device.name : ""}
         </td>
         <td>
             {props.tickets.status}
         </td>
         <td>
-            <Link to={"/ticket/edit/" + props.tickets._id}>Edit</Link> | <button className="btn btn-default" onClick={() => props.deleteTicket(props.tickets._id)}>Delete</button>
+            <Link className="btn btn-primary" to={`/ticket/edit/${props.tickets._id}`}>Edit</Link>
+            <button className="btn btn-danger" onClick={() => props.deleteTicket(props.tickets._id)}>Delete</button>
         </td>
     </tr>
 )
@@ -47,7 +48,7 @@ export default class TicketsList extends Component {
 
         
 
-        axios.get('http://localhost:8080/ticket/', { headers: { 'Authorization': `Bearer ${this.state.token}` } })
+        axios.get('/api/ticket/', { headers: { 'Authorization': `Bearer ${this.state.token}` } })
             .then(res => {
                 console.log(res.data)
                 this.setState({
@@ -60,7 +61,7 @@ export default class TicketsList extends Component {
     }
 
     deleteTicket(id) {
-        axios.delete('http://localhost:8080/ticket/' + id, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
+        axios.delete('/api/ticket/' + id, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
             .then(res => console.log(res.data));
 
         this.setState({

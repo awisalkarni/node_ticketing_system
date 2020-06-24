@@ -30,7 +30,7 @@ class LocationList extends Component {
   componentWillMount() {
     
 
-    axios.get('http://localhost:8080/location', { headers: { 'Authorization': `Bearer ${this.state.token}` } })
+    axios.get('/api/location', { headers: { 'Authorization': `Bearer ${this.state.token}` } })
       .then((res) => {
 
         console.log(res.data)
@@ -54,7 +54,7 @@ class LocationList extends Component {
 
   deleteLocation(id) {
 
-    axios.delete('http://localhost:8080/location/' + id, {headers: {'Authorization': `Bearer ${this.state.token}`}})
+    axios.delete('/api/location/' + id, {headers: {'Authorization': `Bearer ${this.state.token}`}})
     .then((res) => {
       console.log(res.data);
       this.setState({

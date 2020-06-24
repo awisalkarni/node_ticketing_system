@@ -37,7 +37,7 @@ class CreateCompany extends Component {
 
         }
 
-        axios.post('http://localhost:8080/company/add', company, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
+        axios.post('/api/company/add', company, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
             .then((res) => console.log(res))
             .catch((err) => console.log(err));
 

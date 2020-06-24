@@ -29,7 +29,7 @@ class CompanyList extends Component {
   componentWillMount() {
     
 
-    axios.get('http://localhost:8080/company', { headers: { 'Authorization': `Bearer ${this.state.token}` } })
+    axios.get('/api/company', { headers: { 'Authorization': `Bearer ${this.state.token}` } })
       .then((res) => {
 
         console.log(res.data)

@@ -57,7 +57,7 @@ export default class Register extends Component {
 
         }
 
-        axios.post('http://localhost:8080/user/register', data)
+        axios.post('/api/user/register', data)
             .then((res) => {
                 console.log(res)
                 window.location = '/login'

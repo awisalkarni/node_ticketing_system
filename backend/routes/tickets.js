@@ -68,7 +68,7 @@ router.route('/:id').get((req, res) => {
 });
 
 router.route('/:id').delete((req, res) => {
-    Ticket.findByIdAndDelete(req.params.id)
+    Ticket.findByIdAndDelete(req.params.id).populate(['device', 'priority', 'user'])
         .then(() => res.json('Ticket deleted.'))
         .catch(err => res.status(400).json('Error: ' + err));
 });
@@ -78,8 +78,7 @@ router.route('/update/:id').post((req, res) => {
         .then(ticket => {
             ticket.title = req.body.title;
             ticket.description = req.body.description;
-            ticket.user = req.body.description;
-            ticket.device = req.body.description;
+            ticket.device = req.body.device;
             ticket.priority = req.body.priority;
             ticket.status = req.body.status;
 

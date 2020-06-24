@@ -23,7 +23,7 @@ export default class CreateDevice extends Component {
 
     componentDidMount() {
 
-        axios.get('http://localhost:8080/location', {headers: {'Authorization': `Bearer ${this.state.token}` } })
+        axios.get('/api/location', {headers: {'Authorization': `Bearer ${this.state.token}` } })
         .then((res) => {
             this.setState({
                 locations: res.data,
@@ -64,7 +64,7 @@ export default class CreateDevice extends Component {
 
         }
 
-        axios.post('http://localhost:8080/device/add', device, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
+        axios.post('/api/device/add', device, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
             .then((res) => console.log(res))
             .catch((err) => console.log(err));
 

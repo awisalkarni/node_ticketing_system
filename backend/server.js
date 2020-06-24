@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 const app = express();
-const port = 8080;
+const port = 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -31,14 +31,14 @@ const zoneRouter = require('./routes/zone');
 const locationRouter = require('./routes/location');
 
 
-app.use('/exercises', exercisesRouter);
-app.use('/ticket', ticketsRouter);
-app.use('/user', usersRouter);
-app.use('/priority', priorityRouter);
-app.use('/company', companyRouter);
-app.use('/device', deviceRouter);
-app.use('/zone', zoneRouter);
-app.use('/location', locationRouter);
+app.use('/api/exercises', exercisesRouter);
+app.use('/api/ticket', ticketsRouter);
+app.use('/api/user', usersRouter);
+app.use('/api/priority', priorityRouter);
+app.use('/api/company', companyRouter);
+app.use('/api/device', deviceRouter);
+app.use('/api/zone', zoneRouter);
+app.use('/api/location', locationRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);

@@ -35,7 +35,7 @@ class DeviceList extends Component {
   componentWillMount() {
     
 
-    axios.get('http://localhost:8080/device', { headers: { 'Authorization': `Bearer ${this.state.token}` } })
+    axios.get('/api/device', { headers: { 'Authorization': `Bearer ${this.state.token}` } })
       .then((res) => {
 
         console.log(res.data)
@@ -49,7 +49,7 @@ class DeviceList extends Component {
 
   deleteDevice(id) {
 
-    axios.delete('http://localhost:8080/device/' + id, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
+    axios.delete('/api/device/' + id, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
       .then((res) => {
         console.log(res.data)
         this.setState({
