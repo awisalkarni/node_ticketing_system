@@ -8,7 +8,7 @@ const Zone = props => {
     <tr>
       <td>{props.zone._id}</td>
       <td>{props.zone.name}</td>
-      <td>{props.zone.company.name} <Link to="/company">Manage Company</Link></td>
+      <td>{props.zone.company.name}</td>
       <td><button className="btn btn-danger" onClick={() => props.deleteZone(props.zone._id) }>Delete</button></td>
     </tr>
   )
@@ -33,7 +33,7 @@ class ZoneList extends Component {
   componentWillMount() {
 
 
-    axios.get('http://localhost:8080/zone', { headers: { 'Authorization': `Bearer ${this.state.token}` } })
+    axios.get('/api/zone', { headers: { 'Authorization': `Bearer ${this.state.token}` } })
       .then((res) => {
 
         console.log(res.data)
@@ -47,7 +47,7 @@ class ZoneList extends Component {
 
   deleteZone(id) {
 
-    axios.delete('http://localhost:8080/zone/' + id, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
+    axios.delete('/api/zone/' + id, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
       .then(res => {
         console.log(res)
         this.setState({
@@ -78,7 +78,7 @@ class ZoneList extends Component {
           <tr>
             <td>ID</td>
             <td>Name</td>
-            <td>Company</td>
+            <td>Company <Link className="btn btn-success btn-sm" to="/company">Manage</Link></td>
             <td>Actions</td>
           </tr>
         </thead>

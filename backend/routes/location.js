@@ -24,7 +24,7 @@ router.route('/add').post((req, res) => {
 
 router.route('/:id').get((req, res) => {
     Location.findById(req.params.id)
-        .then(Location => res.json(Location))
+        .then(location => res.json(location))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 

@@ -170,10 +170,5 @@ export default class TicketDetails extends Component {
                     </div>
                 </div>
             );
-        
-
-
-
-
     }
 }

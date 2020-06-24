@@ -8,7 +8,11 @@ const Location = props => {
     <tr>
       <td>{props.location._id}</td>
       <td>{props.location.name}</td>
-      <td>{props.location.zone.name} <Link to="/zone">Manage Zone</Link></td>
+      <td>{props.location.zone.name} </td>
+      <td>
+        <Link className="btn btn-primary" to={`/location/edit/${props.location._id}`}>Edit</Link>
+        <button className="btn btn-danger" onClick={ () => props.deleteLocation(props.location._id) }>Delete</button>
+      </td>
     </tr>
   )
 
@@ -74,7 +78,8 @@ class LocationList extends Component {
           <tr>
           <td>ID</td>
           <td>Name</td>
-          <td>Zone</td>
+          <td>Zone <Link className="btn btn-success btn-sm" to="/zone">Manage</Link></td>
+          <td>Action</td>
           </tr>
         </thead>
         <tbody>

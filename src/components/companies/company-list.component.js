@@ -8,6 +8,7 @@ const Company = props => {
     <tr>
       <td>{props.company._id}</td>
       <td>{props.company.name}</td>
+      <td><button className="btn btn-danger">Delete</button></td>
     </tr>
   )
 
@@ -41,6 +42,10 @@ class CompanyList extends Component {
       .catch((err) => console.log(err))
   }
 
+  deleteCompany(){
+    
+  }
+
   companyList() {
 
     return this.state.companies.map((company) => {
@@ -60,6 +65,7 @@ class CompanyList extends Component {
           <tr>
           <td>ID</td>
           <td>Name</td>
+          <td>Action</td>
           </tr>
         </thead>
         <tbody>

@@ -10,8 +10,11 @@ const Device = props => {
       <td>{props.device._id}</td>
       <td>{props.device.name}</td>
       <td>{props.device.comments}</td>
-      <td>{props.device.location.name} <Link to="location">Manage Location</Link></td>
-      <td><button className="btn btn-danger" onClick={ () => props.deleteDevice(props.device._id) }>Delete</button></td>
+      <td>{props.device.location.name}</td>
+      <td>
+        <Link to={`/device/edit/${props.device._id}`} className="btn btn-primary">Edit</Link>
+        <button className="btn btn-danger" onClick={ () => props.deleteDevice(props.device._id) }>Delete</button>
+      </td>
     </tr>
   )
 
@@ -81,7 +84,8 @@ class DeviceList extends Component {
           <td>ID</td>
           <td>Name</td>
           <td>Comments</td>
-          <td>Location</td>
+          <td>Location <Link className="btn btn-success btn-sm" to="location">Manage</Link></td>
+          <td>Action</td>
           </tr>
         </thead>
         <tbody>

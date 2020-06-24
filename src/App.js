@@ -20,6 +20,8 @@ import ZoneList from './components/zone/zone-list.component';
 import CompanyList from './components/companies/company-list.component';
 import CreateCompany from './components/companies/create-company.component';
 import EditTicket from './components/tickets/edit-ticket.component';
+import EditDevice from './components/devices/edit-device.component';
+import EditLocation from './components/locations/edit-location.component';
 
 
 function App() {
@@ -50,9 +52,11 @@ function App() {
             <Route path="/priority/add" exact component={CreatePriority} />
             
             <Route path="/device" exact component={DeviceList} />
+            <Route path="/device/edit/:id" exact component={EditDevice} />
             <Route path="/device/add" exact component={CreateDevice} />
 
             <Route path="/location/add" exact component={CreateLocation} />
+            <Route path="/location/edit/:id" exact component={EditLocation} />
             <Route path="/location/" exact component={LocationList} />
 
             <Route path="/zone/add" exact component={CreateZone} />

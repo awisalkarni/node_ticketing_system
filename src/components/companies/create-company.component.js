@@ -52,7 +52,7 @@ class CreateCompany extends Component {
                 <form onSubmit={this.onSubmit}>
 
                     <div className="form-group">
-                        <label for="name">Name</label>
+                        <label htmlFor="name">Name</label>
                         <input type="text" className="form-control" onChange={this.onChangeName} value={this.state.name} />
                     </div>
 
