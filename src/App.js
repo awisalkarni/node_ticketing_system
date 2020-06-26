@@ -22,6 +22,7 @@ import CreateCompany from './components/companies/create-company.component';
 import EditTicket from './components/tickets/edit-ticket.component';
 import EditDevice from './components/devices/edit-device.component';
 import EditLocation from './components/locations/edit-location.component';
+import Dashboard from './components/dashboard.component';
 
 
 function App() {
@@ -38,8 +39,9 @@ function App() {
             <Route path="/login" exact component={LoginBox} />
             <Route path="/register" exact component={RegisterBox} />
             <Route path="/logout" exact component={Logout} />
-            <Route path="/" exact component={TicketsList} />
-            
+
+            <Route path="/" exact component={Dashboard}/>
+            <Route path="/ticket" exact component={TicketsList} />
             <Route path="/ticket/add" exact component={CreateTicket} />
             <Route path="/ticket/edit/:id" exact component={EditTicket} />
             <Route path="/ticket/detail/:id" exact component={TicketDetails} />

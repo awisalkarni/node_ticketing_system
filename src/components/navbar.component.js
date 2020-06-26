@@ -20,7 +20,7 @@ export default class Navbar extends Component {
           <ul className="navbar-nav mr-auto">
 
             <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a className="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Tickets
               </a>
               <div className="dropdown-menu" aria-labelledby="navbarDropdown">
