@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import "bootstrap/dist/css/bootstrap.min.css";
+import axios from 'axios';
 import Navbar from "./components/navbar.component";
 import CreateUser from "./components/users/create-user.component";
 import CreateTicket from "./components/tickets/create-ticket.component";
@@ -26,6 +27,15 @@ import Dashboard from './components/dashboard.component';
 
 
 function App() {
+
+  useEffect(() => {
+    const getCsrfToken = async () => {
+      const { data } = await axios.get('/api/csrf-token');
+      console.log(data.csrfToken);
+      axios.defaults.headers.post['X-CSRF-Token'] = data.csrfToken;
+     };
+    getCsrfToken();
+  }, []);
 
   
   return (

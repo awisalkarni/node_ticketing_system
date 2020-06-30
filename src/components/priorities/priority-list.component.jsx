@@ -58,6 +58,7 @@ class PriorityList extends Component {
       <h1>Priorities <Link className="btn btn-primary btn-sm" to="/priority/add">Add</Link></h1>
       <table className="table">
         <thead className="thead-light">
+    
           <tr>
           <td>id</td>
           <td>Name</td>
