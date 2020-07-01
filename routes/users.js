@@ -44,7 +44,7 @@ router.route('/login').post(async (req, res) => {
 
       if (user && bcrypt.compareSync(password, user.password)) {
         const secret = process.env.JWTSECRET || config.secret;
-        const token = jwt.sign({ sub: user.id }, config.secret);
+        const token = jwt.sign({ sub: user.id }, secret);
         res.json({ user: user, token: token });
       } else {
         res.status(401).json('Invalid username or password');
