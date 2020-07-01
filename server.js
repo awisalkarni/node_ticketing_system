@@ -7,6 +7,8 @@ const cors = require('cors');
 const config = require('./helpers/config.json');
 const jwt = require('./helpers/jwt');
 const mongoose = require('mongoose');
+const path = require('path')
+
 
 // setup route middlewares
 var csrfProtection = csrf({ cookie: true })
@@ -16,10 +18,13 @@ var parseForm = bodyParser.urlencoded({ extended: false })
 require('dotenv').config();
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(cors());
+// Serve static files from the React frontend app
+app.use(express.static(path.join(__dirname, 'client/build')))
 app.use(express.json());
+
 app.use(jwt());
 
 // parse cookies
@@ -32,7 +37,7 @@ app.get('/api/csrf-token', (req, res) => {
   res.json({ csrfToken: req.csrfToken() });
 });
 
-const uri = config.connectionString;
+const uri = process.env.MONGODB_URI || config.connectionString;
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }
 );
 const connection = mongoose.connection;
@@ -58,6 +63,11 @@ app.use('/api/company', companyRouter);
 app.use('/api/device', deviceRouter);
 app.use('/api/zone', zoneRouter);
 app.use('/api/location', locationRouter);
+
+// Anything that doesn't match the above, send back index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/client/build/index.html'))
+})
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
