@@ -20,7 +20,7 @@ class CreateZone extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:8080/company',{ headers: { 'Authorization': `Bearer ${this.state.token}` } })
+        axios.get('/api/company',{ headers: { 'Authorization': `Bearer ${this.state.token}` } })
         .then((res) => {
             this.setState({
                 companies: res.data,
@@ -54,7 +54,7 @@ class CreateZone extends Component {
 
         }
 
-        axios.post('http://localhost:8080/zone/add', zone, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
+        axios.post('/api/zone/add', zone, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
             .then((res) => console.log(res))
             .catch((err) => console.log(err));
         
@@ -75,7 +75,7 @@ class CreateZone extends Component {
                     </div>
 
                     <div className="form-group">
-                        <label>Name</label>
+                        <label>Company</label>
                         <select className="form-control" onChange={this.onChangeCompany} value={this.state.company}>
                             { this.state.companies.map((company) => {
                                 return <option key={company._id} value={ company._id }>{ company.name }</option>
