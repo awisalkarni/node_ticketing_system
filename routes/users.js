@@ -3,7 +3,11 @@ let User = require('../models/user.model');
 let Company = require('../models/company.model');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const config = require('../helpers/config.json');
+try {
+  var config = require('./config.json');
+} catch (ex) {
+
+}
 
 router.route('/').get((req, res) => {
   User.find()
@@ -39,6 +43,7 @@ router.route('/login').post(async (req, res) => {
     .then((user) => {
 
       if (user && bcrypt.compareSync(password, user.password)) {
+        const secret = process.env.JWTSECRET || config.secret;
         const token = jwt.sign({ sub: user.id }, config.secret);
         res.json({ user: user, token: token });
       } else {
