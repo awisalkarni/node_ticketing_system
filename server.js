@@ -4,7 +4,7 @@ var bodyParser = require('body-parser')
 var express = require('express')
 
 const cors = require('cors');
-const config = require('./helpers/config.json');
+
 const jwt = require('./helpers/jwt');
 const mongoose = require('mongoose');
 const path = require('path')
@@ -36,6 +36,13 @@ app.use(parseForm);
 app.get('/api/csrf-token', (req, res) => {
   res.json({ csrfToken: req.csrfToken() });
 });
+try {
+  var config = require('./helpers/config.json');
+  // do stuff
+} catch (ex) {
+  
+}
+
 
 const uri = process.env.MONGODB_URI || config.connectionString;
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }
