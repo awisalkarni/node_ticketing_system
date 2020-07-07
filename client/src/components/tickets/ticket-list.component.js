@@ -41,12 +41,12 @@ export default class TicketsList extends Component {
             token: ""
         }
 
-        this.state.token = localStorage.getItem('token');
+        
     }
 
     componentDidMount() {
 
-        
+        this.state.token = localStorage.getItem('token');
 
         axios.get('/api/ticket/', { headers: { 'Authorization': `Bearer ${this.state.token}` } })
             .then(res => {

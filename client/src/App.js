@@ -29,13 +29,17 @@ import Dashboard from './components/dashboard.component';
 function App() {
 
   useEffect(() => {
+    
+  }, []);
+
+  useEffect(() => {
     const getCsrfToken = async () => {
       const { data } = await axios.get('/api/csrf-token');
-      console.log(data.csrfToken);
+      console.log(`csrf: ${data.csrfToken}`);
       axios.defaults.headers.post['X-CSRF-Token'] = data.csrfToken;
      };
     getCsrfToken();
-  }, []);
+  });
 
   
   return (
