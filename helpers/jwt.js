@@ -2,7 +2,7 @@ const expressJwt = require('express-jwt');
 try {
     var config = require('./config.json');
 } catch (ex) {
-  
+  console.log(ex);
 }
 
 const User = require('../models/user.model');

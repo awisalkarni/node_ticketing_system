@@ -5,7 +5,7 @@ var express = require('express')
 
 const cors = require('cors');
 
-const jwt = require('./helpers/jwt');
+
 const mongoose = require('mongoose');
 const path = require('path')
 
@@ -24,8 +24,6 @@ app.use(cors());
 // Serve static files from the React frontend app
 app.use(express.static(path.join(__dirname, 'client/build')))
 app.use(express.json());
-
-app.use(jwt());
 
 // parse cookies
 // we need this because "cookie" is true in csrfProtection
@@ -52,7 +50,6 @@ connection.once('open', () => {
   console.log("MongoDB database connection established successfully");
 })
 
-const exercisesRouter = require('./routes/exercises');
 const usersRouter = require('./routes/users');
 const ticketsRouter = require('./routes/tickets');
 const priorityRouter = require('./routes/priority');
@@ -62,7 +59,6 @@ const zoneRouter = require('./routes/zone');
 const locationRouter = require('./routes/location');
 
 
-app.use('/api/exercises', exercisesRouter);
 app.use('/api/ticket', ticketsRouter);
 app.use('/api/user', usersRouter);
 app.use('/api/priority', priorityRouter);

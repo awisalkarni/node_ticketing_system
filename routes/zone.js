@@ -1,50 +1,10 @@
 const router = require('express').Router();
-let Zone = require('../models/zone.model');
+const zoneController = require('../controllers/zoneController');
 
-router.route('/').get((req, res) => {
-    Zone.find().populate(['company'])
-        .then(zones => res.json(zones))
-        .catch(err => res.status(400).json('Error: ' + err));
-});
-
-router.route('/add').post((req, res) => {
-    const name = req.body.name;
-    const company = req.body.company;
-
-
-    const newZone = new Zone({
-        name: name,
-        company: company,
-    });
-
-    newZone.save()
-        .then(() => res.json('Zone added!'))
-        .catch(err => res.status(400).json('Error: ' + err));
-});
-
-router.route('/:id').get((req, res) => {
-    Zone.findById(req.params.id)
-        .then(Zone => res.json(Zone))
-        .catch(err => res.status(400).json('Error: ' + err));
-});
-
-router.route('/:id').delete((req, res) => {
-    Zone.findByIdAndDelete(req.params.id)
-        .then(() => res.json('Zone deleted.'))
-        .catch(err => res.status(400).json('Error: ' + err));
-});
-
-router.route('/update/:id').post((req, res) => {
-    Zone.findById(req.params.id)
-        .then(zone => {
-            zone.name = req.body.name;
-            zone.company = req.body.company;
-
-            zone.save()
-                .then(() => res.json('Zone updated!'))
-                .catch(err => res.status(400).json('Error: ' + err));
-        })
-        .catch(err => res.status(400).json('Error: ' + err));
-});
+router.route('/').get(zoneController.index);
+router.route('/add').post(zoneController.add);
+router.route('/:id').get(zoneController.findById);
+router.route('/:id').delete(zoneController.deleteByid);
+router.route('/update/:id').post(zoneController.updateById);
 
 module.exports = router; 
