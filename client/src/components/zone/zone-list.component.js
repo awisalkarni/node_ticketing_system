@@ -28,6 +28,7 @@ class ZoneList extends Component {
     }
 
     this.state.token = localStorage.getItem("token");
+    console.log(this.state.token);
   }
 
   componentWillMount() {
@@ -35,8 +36,6 @@ class ZoneList extends Component {
 
     axios.get('/api/zone', { headers: { 'Authorization': `Bearer ${this.state.token}` } })
       .then((res) => {
-
-        console.log(res.data)
         this.setState({
           zones: res.data
         });

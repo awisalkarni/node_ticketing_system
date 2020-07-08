@@ -35,8 +35,8 @@ function App() {
   useEffect(() => {
     const getCsrfToken = async () => {
       const { data } = await axios.get('/api/csrf-token');
-      console.log(`csrf: ${data.csrfToken}`);
-      axios.defaults.headers.post['X-CSRF-Token'] = data.csrfToken;
+      axios.defaults.headers.common['X-CSRF-Token'] = data.csrfToken;
+      console.log(`csrf token: ${data.csrfToken}`);
      };
     getCsrfToken();
   });
