@@ -88,7 +88,7 @@ class CreateLocation extends Component {
                     </div>
 
                     <div className="form-group">
-                        <input type="submit" value="Create Priority" className="btn btn-primary"/>
+                        <input type="submit" value="Create Location" className="btn btn-primary"/>
                     </div>
 
                 </form>
