@@ -57,6 +57,7 @@ const companyRouter = require('./routes/company');
 const deviceRouter = require('./routes/device');
 const zoneRouter = require('./routes/zone');
 const locationRouter = require('./routes/location');
+const dashboardRouter = require('./routes/dashboard');
 
 
 app.use('/api/ticket', ticketsRouter);
@@ -66,6 +67,7 @@ app.use('/api/company', companyRouter);
 app.use('/api/device', deviceRouter);
 app.use('/api/zone', zoneRouter);
 app.use('/api/location', locationRouter);
+app.use('/api/dashboard', dashboardRouter);
 
 // Anything that doesn't match the above, send back index.html
 app.get('*', (req, res) => {
