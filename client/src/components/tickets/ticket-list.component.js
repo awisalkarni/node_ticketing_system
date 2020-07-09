@@ -122,7 +122,9 @@ export default class TicketsList extends Component {
         ticket.priority = priority;
 
         axios.post('/api/ticket/update/' + ticket._id, ticket, { headers: { 'Authorization': `Bearer ${this.state.token}`}})
-            .then(res => console.log(res.data))
+            .then(res => {
+                window.location = '/ticket';
+            })
             .catch(err => console.log(err));
     }
 
