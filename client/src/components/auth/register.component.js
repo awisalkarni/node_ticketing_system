@@ -10,12 +10,12 @@ export default class Register extends Component {
         this.state = {
             username: "",
             email: "",
-            company: "",
+            company: "JomParkir Sdn. Bhd.",
             password: "",
         }
         this.onChangeUsername = this.onChangeUsername.bind(this);
         this.onChangeEmail = this.onChangeEmail.bind(this);
-        this.onChangeCompany = this.onChangeCompany.bind(this);
+        // this.onChangeCompany = this.onChangeCompany.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
@@ -34,11 +34,11 @@ export default class Register extends Component {
         })
     }
 
-    onChangeCompany(e) {
-        this.setState({
-            company: e.target.value
-        })
-    }
+    // onChangeCompany(e) {
+    //     this.setState({
+    //         company: e.target.value
+    //     })
+    // }
     
     onChangePassword(e) {
         this.setState({
@@ -70,10 +70,7 @@ export default class Register extends Component {
             <form onSubmit={this.onSubmit}>
                 <h3>Sign Up</h3>
 
-                <div className="form-group">
-                    <label>Company Name</label>
-                    <input type="text" className="form-control" placeholder="Company" onChange={this.onChangeCompany} />
-                </div>
+                
 
                 <div className="form-group">
                     <label>Username</label>

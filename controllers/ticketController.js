@@ -7,7 +7,7 @@ let Comment = require('../models/ticket_comments.model');
 
 exports.index = (req, res) => {
     Ticket.find()
-        .populate(['priority', 'user', 'device', 'comments'])
+        .populate(['user', 'device', 'comments'])
         .then(tickets => res.json(tickets))
         .catch(err => res.status(400).json('Error: ' + err));
 }

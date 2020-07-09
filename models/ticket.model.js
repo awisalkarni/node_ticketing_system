@@ -7,7 +7,7 @@ const ticketSchema = new Schema({
   description: { type: String, required: true },
   status: { type: String, default: "open" },
   user: { type: Schema.Types.ObjectId, ref: "User" },
-  priority: { type: Schema.Types.ObjectId, ref: "Priority" },
+  priority: { type: String, default: "medium" },
   device: { type: Schema.Types.ObjectId, ref: "Device" },
   comments: [
     {

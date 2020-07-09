@@ -10,13 +10,13 @@ export default class EditTicket extends Component {
         this.state = {
             title: "",
             description: "",
-            priorities: [],
             selectedPriorities: "",
             devices: [],
             selectedDevices: "",
+            selectedStatus: "",
             token: "",
             id: "",
-            status: ""
+            status: "",
         }
 
         this.onChangeTitle = this.onChangeTitle.bind(this);
@@ -35,7 +35,6 @@ export default class EditTicket extends Component {
                 this.setState({
                     title: res.data.title,
                     description: res.data.description,
-                    selectedPriorities: res.data.priority._id,
                     selectedDevices: res.data.device._id,
                     status: res.data.status
                 })
@@ -49,10 +48,8 @@ export default class EditTicket extends Component {
             .then(res => {
 
                 this.setState({
-
-                    priorities: res.data.priorities,
-                    selectedPriorities: res.data.priorities.length === 0 ? "" : res.data.priorities[0]._id,
-
+                    selectedPriorities: res.data.priority,
+                    selectedStatus: res.data.status,
                     devices: res.data.devices,
                     selectedDevices: res.data.devices.length === 0 ? "" : res.data.devices[0]._id
                 })
@@ -90,6 +87,14 @@ export default class EditTicket extends Component {
         this.setState({
             selectedPriorities: e.target.value
         })
+    }
+
+    onChangeStatus(e){
+
+        this.setState({
+            selectedStatus: e.target.value
+        })
+
     }
 
     onSubmit(e) {
@@ -155,6 +160,22 @@ export default class EditTicket extends Component {
                     </div>
 
                     <div className="form-group">
+                        <label>Status</label>
+                        <select 
+                        required
+                        className="form-control"
+                        value={this.state.selectedStatus}
+                        onChange={this.onChangeStatus}>
+
+                            <option value="open">Open</option>
+                            <option value="on_hold">On Hold</option>
+                            <option value="in_progress">In Progress</option>
+                            <option value="in_review">In Review</option>
+                            <option value="complete">Complete</option>
+                        </select>
+                    </div>
+
+                    <div className="form-group">
                         <label>Priority: </label> <Link to="/priority/add">Add</Link>
                         <select
                             required
@@ -162,15 +183,9 @@ export default class EditTicket extends Component {
                             
                             value={this.state.selectedPriorities}
                             onChange={this.onChangePriority}>
-                            {
-                                this.state.priorities.map(priority => {
-                                    return <option
-                                        key={priority._id}
-                                        value={priority._id}>
-                                        {priority.name}
-                                    </option>
-                                })
-                            }
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
                         </select>
                     </div>
 
