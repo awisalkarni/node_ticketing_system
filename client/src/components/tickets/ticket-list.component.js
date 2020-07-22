@@ -2,61 +2,12 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './ticket.css';
-
-const Ticket = props => (
-    <tr>
-        <td>
-            <Link to={"/ticket/detail/" + props.tickets._id} >{props.tickets.title}</Link>
-        </td>
-        <td>
-            {props.tickets.description}
-        </td>
-        <td>
-            {props.tickets.priority}
-        </td>
-        <td>
-            {props.tickets.user.username}
-        </td>
-        <td>
-            {(props.tickets.device) ? props.tickets.device.name : ""}
-        </td>
-        <td>
-            {props.tickets.status}
-        </td>
-        <td>
-            <div className="btn-group">
-                <Link className="btn btn-primary btn-sm" to={`/ticket/edit/${props.tickets._id}`}>Edit</Link>
-            </div>
-            <div className="btn-group">
-                <button className="btn btn-danger btn-sm" onClick={() => props.deleteTicket(props.tickets._id)}>Delete</button>
-            </div>
-            <div className="btn-group dropright">
-                <button type="button" className="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Status ({props.tickets.status})
-                </button>
-                <div className="dropdown-menu">
-                    <button className={`dropdown-item ${props.tickets.status === "open" ? "active" : ""}`} onClick={() => props.changeStatus(props.tickets, "open")}>Open</button>
-                    <button className={`dropdown-item ${props.tickets.status === "on_hold" ? "active" : ""}`} onClick={() => props.changeStatus(props.tickets, "on_hold")}>On Hold</button>
-                    <button className={`dropdown-item ${props.tickets.status === "in_progress" ? "active" : ""}`} onClick={() => props.changeStatus(props.tickets, "in_progress")}>In Progress</button>
-                    <button className={`dropdown-item ${props.tickets.status === "in_review" ? "active" : ""}`} onClick={() => props.changeStatus(props.tickets, "in_review")}>In Review</button>
-                    <button className={`dropdown-item ${props.tickets.status === "complete" ? "active" : ""}`} onClick={() => props.changeStatus(props.tickets, "complete")}>Complete</button>
-                </div>
-            </div>
-
-            <div className="btn-group dropright">
-                <button type="button" className="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Priority ({props.tickets.priority})
-                </button>
-                <div className="dropdown-menu">
-                    <button className={`dropdown-item ${props.tickets.priority === "high" ? "active" : ""}`} onClick={() => props.changePriority(props.tickets, "high")}>High</button>
-                    <button className={`dropdown-item ${props.tickets.priority === "medium" ? "active" : ""}`} onClick={() => props.changePriority(props.tickets, "medium")}>Medium</button>
-                    <button className={`dropdown-item ${props.tickets.priority === "low" ? "active" : ""}`} onClick={() => props.changePriority(props.tickets, "low")}>Low</button>
-                </div>
-            </div>
-
-        </td>
-    </tr>
-)
+import 'react-date-range/dist/styles.css'; // main style file
+import 'react-date-range/dist/theme/default.css'; // theme css file
+import { DateRangePicker } from 'react-date-range';
+import { Ticket } from './ticket.component'
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 export default class TicketsList extends Component {
 
@@ -66,10 +17,17 @@ export default class TicketsList extends Component {
         this.deleteTicket = this.deleteTicket.bind(this);
         this.changeStatus = this.changeStatus.bind(this);
         this.changePriority = this.changePriority.bind(this);
+        this.handleDateSelect = this.handleDateSelect.bind(this);
+        this.showConfirmDeleteDialog = this.showConfirmDeleteDialog.bind(this);
 
         this.state = {
             tickets: [],
-            token: ""
+            token: "",
+            selectionRange: {
+                startDate: new Date(),
+                endDate: new Date(),
+                key: 'selection',
+              },
         }
 
         this.state.token = localStorage.getItem('token');
@@ -77,7 +35,7 @@ export default class TicketsList extends Component {
 
     componentDidMount() {
 
-        
+
 
         axios.get('/api/ticket/', { headers: { 'Authorization': `Bearer ${this.state.token}` } })
             .then(res => {
@@ -91,10 +49,33 @@ export default class TicketsList extends Component {
             })
     }
 
+    showConfirmDeleteDialog(id) {
+        confirmAlert({
+            title: 'Confirm to submit',
+            message: 'Are you sure to do this.',
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => {
+                    // console.log(this)
+                    console.log(this.deleteTicket(id))
+                }
+              },
+              {
+                label: 'No',
+                onClick: () => {}
+              }
+            ]
+          });
+    }
+
     deleteTicket(id) {
+
+        console.log(id)
+        
         axios.delete('/api/ticket/' + id, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
             .then(res => {
-                window.location = '/ticket';
+                // window.location = '/ticket';
             });
 
         this.setState({
@@ -108,7 +89,7 @@ export default class TicketsList extends Component {
 
         ticket.status = status;
 
-        axios.post('/api/ticket/update/' + ticket._id, ticket, { headers: { 'Authorization': `Bearer ${this.state.token}`}})
+        axios.post('/api/ticket/update/' + ticket._id, ticket, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
             .then(res => {
                 window.location = '/ticket';
             })
@@ -121,23 +102,38 @@ export default class TicketsList extends Component {
 
         ticket.priority = priority;
 
-        axios.post('/api/ticket/update/' + ticket._id, ticket, { headers: { 'Authorization': `Bearer ${this.state.token}`}})
+        axios.post('/api/ticket/update/' + ticket._id, ticket, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
             .then(res => {
                 window.location = '/ticket';
             })
             .catch(err => console.log(err));
     }
 
+    handleDateSelect(ranges) {
+        console.log(ranges);
+        // {
+        //   selection: {
+        //     startDate: [native Date Object],
+        //     endDate: [native Date Object],
+        //   }
+        // }
+    }
+
     ticketList() {
         return this.state.tickets.map(currentTicket => {
-            return <Ticket tickets={currentTicket} deleteTicket={this.deleteTicket} key={currentTicket._id} changeStatus={this.changeStatus} changePriority={this.changePriority} />
+            return <Ticket tickets={currentTicket} deleteTicket={this.showConfirmDeleteDialog} key={currentTicket._id} changeStatus={this.changeStatus} changePriority={this.changePriority} />
         })
     }
 
     render() {
+
+
         return (
             <div>
                 <h3>Tickets <Link className="btn btn-primary" to="/ticket/add">Add</Link></h3>
+
+              
+
                 <table className="table">
                     <thead className="thead-light">
                         <tr>

@@ -53,8 +53,10 @@ class Dashboard extends Component {
                             <div className="rotate">
                                 <i className="fa fa-list fa-4x"></i>
                             </div>
+                            <a href="/device" style={{color: 'white'}}>
                             <h6 className="text-uppercase">Device</h6>
                             <h1 className="display-4">{this.state.device_count}</h1>
+                            </a>
                         </div>
                     </div>
                 </div>

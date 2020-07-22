@@ -120,8 +120,8 @@ export default class TicketDetails extends Component {
 
     render() {
 
-        const { children, ...rest } = this.props
-        const { edit } = this.state
+        // const { children, ...rest } = this.props
+        // const { edit } = this.state
 
         
             // view mode
