@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 const Location = props => {
 
@@ -23,12 +25,34 @@ class LocationList extends Component {
   constructor(props) {
     super(props);
 
+    this.showConfirmDeleteDialog = this.showConfirmDeleteDialog.bind(this)
+    this.deleteLocation = this.deleteLocation.bind(this)
+
     this.state = {
       locations: [],
       token: ""
     }
 
     this.state.token = localStorage.getItem("token");
+  }
+
+  showConfirmDeleteDialog(id) {
+    confirmAlert({
+      title: 'Confirm to submit',
+      message: 'Are you sure to do this.',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => {
+            this.deleteZone(id)
+          }
+        },
+        {
+          label: 'No',
+          onClick: () => { }
+        }
+      ]
+    });
   }
 
   componentWillMount() {
@@ -50,7 +74,7 @@ class LocationList extends Component {
 
     return this.state.locations.map((location) => {
 
-      return <Location location={location} key={location._id} deleteLocation={this.deleteLocation}/>;
+      return <Location location={location} key={location._id} deleteLocation={this.showConfirmDeleteDialog}/>;
 
     });
 

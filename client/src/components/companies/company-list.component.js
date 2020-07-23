@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 const Company = props => {
 
@@ -25,6 +27,25 @@ class CompanyList extends Component {
     }
 
     this.state.token = localStorage.getItem("token");
+  }
+
+  showConfirmDeleteDialog(id) {
+    confirmAlert({
+      title: 'Confirm to submit',
+      message: 'Are you sure to do this.',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => {
+            this.deleteDevice(id)
+          }
+        },
+        {
+          label: 'No',
+          onClick: () => { }
+        }
+      ]
+    });
   }
 
   componentWillMount() {

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './device.css';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 const Device = props => {
 
@@ -33,6 +35,25 @@ class DeviceList extends Component {
     }
 
     this.state.token = localStorage.getItem("token");
+  }
+
+  showConfirmDeleteDialog(id) {
+    confirmAlert({
+      title: 'Confirm to submit',
+      message: 'Are you sure to do this.',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => {
+            this.deleteDevice(id)
+          }
+        },
+        {
+          label: 'No',
+          onClick: () => { }
+        }
+      ]
+    });
   }
 
   componentWillMount() {
@@ -68,7 +89,7 @@ class DeviceList extends Component {
 
     return this.state.devices.map((device) => {
 
-      return <Device device={device} key={device._id} deleteDevice={this.deleteDevice} />;
+      return <Device device={device} key={device._id} deleteDevice={this.componentWillMount} />;
 
     });
 

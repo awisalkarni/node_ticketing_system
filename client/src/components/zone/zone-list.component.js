@@ -11,7 +11,7 @@ const Zone = props => {
       <td>{props.zone._id}</td>
       <td>{props.zone.name}</td>
       <td>{props.zone.company.name}</td>
-      <td><button className="btn btn-danger" onClick={() => props.showConfirmDeleteDialog(props.zone._id) }>Delete</button></td>
+      <td><button className="btn btn-danger" onClick={() => props.showConfirmDeleteDialog(props.zone._id)}>Delete</button></td>
     </tr>
   )
 
@@ -49,22 +49,22 @@ class ZoneList extends Component {
 
   showConfirmDeleteDialog(id) {
     confirmAlert({
-        title: 'Confirm to submit',
-        message: 'Are you sure to do this.',
-        buttons: [
-          {
-            label: 'Yes',
-            onClick: () => {
-                this.deleteZone(id)
-            }
-          },
-          {
-            label: 'No',
-            onClick: () => {}
+      title: 'Confirm to submit',
+      message: 'Are you sure to do this.',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => {
+            this.deleteZone(id)
           }
-        ]
-      });
-}
+        },
+        {
+          label: 'No',
+          onClick: () => { }
+        }
+      ]
+    });
+  }
 
   deleteZone(id) {
 
@@ -76,7 +76,7 @@ class ZoneList extends Component {
         })
       });
 
-    
+
 
   }
 
