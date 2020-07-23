@@ -66,7 +66,7 @@ exports.findById = (req, res) => {
 }
 
 exports.deleteById = (req, res) => {
-    Ticket.findByIdAndDelete(req.params.id).populate(['device', 'priority', 'user'])
+    Ticket.findByIdAndDelete(req.params.id)
         .then(() => res.json('Ticket deleted.'))
         .catch(err => res.status(400).json('Error: ' + err));
 }

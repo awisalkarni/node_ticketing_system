@@ -34,13 +34,11 @@ export default class CreateTicket extends Component {
             .then(res => {
 
                 this.setState({
-
                     priorities: res.data.priorities,
-                    selectedPriorities: res.data.priorities.length === 0 ? "" : res.data.priorities[0]._id,
-
                     devices: res.data.devices,
                     selectedDevices: res.data.devices.length === 0 ? "" : res.data.devices[0]._id
                 })
+                
 
 
 
@@ -153,15 +151,9 @@ export default class CreateTicket extends Component {
                             
                             value={this.state.selectedPriorities}
                             onChange={this.onChangePriority}>
-                            {
-                                this.state.priorities.map(priority => {
-                                    return <option
-                                        key={priority._id}
-                                        value={priority._id}>
-                                        {priority.name}
-                                    </option>
-                                })
-                            }
+                            <option value="high">High</option>
+                            <option value="medium" selected={true}>Medium</option>
+                            <option value="low">Low</option>
                         </select>
                     </div>
 

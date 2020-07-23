@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 const Zone = props => {
 
@@ -9,7 +11,7 @@ const Zone = props => {
       <td>{props.zone._id}</td>
       <td>{props.zone.name}</td>
       <td>{props.zone.company.name}</td>
-      <td><button className="btn btn-danger" onClick={() => props.deleteZone(props.zone._id) }>Delete</button></td>
+      <td><button className="btn btn-danger" onClick={() => props.showConfirmDeleteDialog(props.zone._id) }>Delete</button></td>
     </tr>
   )
 
@@ -21,6 +23,7 @@ class ZoneList extends Component {
     super(props);
 
     this.deleteZone = this.deleteZone.bind(this);
+    this.showConfirmDeleteDialog = this.showConfirmDeleteDialog.bind(this);
 
     this.state = {
       zones: [],
@@ -44,6 +47,25 @@ class ZoneList extends Component {
       .catch((err) => console.log(err))
   }
 
+  showConfirmDeleteDialog(id) {
+    confirmAlert({
+        title: 'Confirm to submit',
+        message: 'Are you sure to do this.',
+        buttons: [
+          {
+            label: 'Yes',
+            onClick: () => {
+                this.deleteZone(id)
+            }
+          },
+          {
+            label: 'No',
+            onClick: () => {}
+          }
+        ]
+      });
+}
+
   deleteZone(id) {
 
     axios.delete('/api/zone/' + id, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
@@ -62,7 +84,7 @@ class ZoneList extends Component {
 
     return this.state.zones.map((zone) => {
 
-      return <Zone zone={zone} key={zone._id} deleteZone={this.deleteZone} />;
+      return <Zone zone={zone} key={zone._id} showConfirmDeleteDialog={this.showConfirmDeleteDialog} />;
 
     });
 
