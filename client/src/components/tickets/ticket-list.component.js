@@ -97,22 +97,22 @@ export default class TicketsList extends Component {
 
     }
 
-    filter({status, priority } ) {
+    filter({ status, priority }) {
 
         axios.get('/api/ticket/filter', {
             params: {
-              status: status,
-              priority: priority
+                status: status,
+                priority: priority
             }
-          }, { headers: {'Authorization': `Bearer ${this.state.token}`}})
-        .then(res => {
-            this.setState({
-                tickets: res.data,
-                filteredStatus: status,
-                filteredPriority: priority
+        }, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
+            .then(res => {
+                this.setState({
+                    tickets: res.data,
+                    filteredStatus: status,
+                    filteredPriority: priority
+                })
             })
-        })
-        .catch(err => console.log(err))
+            .catch(err => console.log(err))
 
     }
 
@@ -151,31 +151,40 @@ export default class TicketsList extends Component {
             <div>
                 <h3>Tickets <Link className="btn btn-primary" to="/ticket/add">Add</Link></h3>
 
-                <div className="dropdown">
-                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Status {this.state.filteredStatus}
-                    </button>
-                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <button className={`dropdown-item`} onClick={() => {this.filter({ status: "" })}}>All</button>
-                        <button className={`dropdown-item`} onClick={() => {this.filter({ status: 'open' })}}>Open</button>
-                        <button className={`dropdown-item`} onClick={() => {this.filter({ status: 'on_hold' })}}>On Hold</button>
-                        <button className={`dropdown-item`} onClick={() => {this.filter({ status: 'in_progress' })}}>In Progress</button>
-                        <button className={`dropdown-item`} onClick={() => {this.filter({ status: 'in_review' })}}>In Review</button>
-                        <button className={`dropdown-item`} onClick={() => {this.filter({ status: 'complete' })}}>Complete</button>
+
+                <div className="row" style={ {marginBottom: 20 }}>
+                    <div className="col-2">
+                        <div className="dropdown">
+                            <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Status {this.state.filteredStatus}
+                            </button>
+                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <button className={`dropdown-item`} onClick={() => { this.filter({ status: "" }) }}>All</button>
+                                <button className={`dropdown-item`} onClick={() => { this.filter({ status: 'open' }) }}>Open</button>
+                                <button className={`dropdown-item`} onClick={() => { this.filter({ status: 'on_hold' }) }}>On Hold</button>
+                                <button className={`dropdown-item`} onClick={() => { this.filter({ status: 'in_progress' }) }}>In Progress</button>
+                                <button className={`dropdown-item`} onClick={() => { this.filter({ status: 'in_review' }) }}>In Review</button>
+                                <button className={`dropdown-item`} onClick={() => { this.filter({ status: 'complete' }) }}>Complete</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="col-2">
+                        <div className="dropdown">
+                            <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Priority {this.state.filteredPriority}
+                            </button>
+                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <button className={`dropdown-item`} onClick={() => { this.filter({ priority: '' }) }}>All</button>
+                                <button className={`dropdown-item`} onClick={() => { this.filter({ priority: 'low' }) }}>Low</button>
+                                <button className={`dropdown-item`} onClick={() => { this.filter({ priority: 'medium' }) }}>Medium</button>
+                                <button className={`dropdown-item`} onClick={() => { this.filter({ priority: 'high' }) }}>High</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div className="dropdown">
-                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Priority {this.state.filteredPriority}
-                    </button>
-                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <button className={`dropdown-item`} onClick={() => {this.filter({priority: '' })}}>All</button>
-                        <button className={`dropdown-item`} onClick={() => {this.filter({priority: 'low' })}}>Low</button>
-                        <button className={`dropdown-item`} onClick={() => {this.filter({priority: 'medium' })}}>Medium</button>
-                        <button className={`dropdown-item`} onClick={() => {this.filter({priority: 'high' })}}>High</button>
-                    </div>
-                </div>
+
 
 
 
@@ -188,7 +197,9 @@ export default class TicketsList extends Component {
                             <th>Reported by</th>
                             <th>Device</th>
                             <th>Status</th>
+                            <th>Date</th>
                             <th>Actions</th>
+
                         </tr>
                     </thead>
                     <tbody>

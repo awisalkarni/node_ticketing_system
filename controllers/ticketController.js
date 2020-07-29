@@ -8,7 +8,7 @@ let Comment = require('../models/ticket_comments.model');
 exports.index = (req, res) => {
     Ticket.find({
         status: { $ne: 'complete' }
-    })
+    }, [], { sort: { createdAt: -1 } })
         .populate(['user', 'device', 'comments'])
         .then(tickets => res.json(tickets))
         .catch(err => res.status(400).json('Error: ' + err));
@@ -40,7 +40,7 @@ exports.filter = (req, res) => {
         };
     }
 
-     Ticket.find(filter)
+     Ticket.find(filter, [], { sort: { createdAt: -1 } })
         .populate(['user', 'device', 'comments'])
         .then(tickets => res.json(tickets))
         .catch(err => res.status(400).json('Error: ' + err));
@@ -87,7 +87,7 @@ exports.add = (req, res) => {
 }
 
 exports.findById = (req, res) => {
-    Ticket.findOne({ _id: req.params.id }).populate(['priority', 'user', 'device',
+    Ticket.findOne({ _id: req.params.id }).populate(['user', 'device',
         {
             path: 'comments',
             populate: {
