@@ -28,9 +28,7 @@ export function Ticket(props) {
             <div className="btn-group">
                 <Link className="btn btn-primary btn-sm" to={`/ticket/edit/${props.tickets._id}`}>Edit</Link>
             </div>
-            <div className="btn-group">
-                <button className="btn btn-danger btn-sm" onClick={() => props.deleteTicket(props.tickets._id)}>Delete</button>
-            </div>
+            
             <div className="btn-group dropright">
                 <button type="button" className="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Status ({props.tickets.status})

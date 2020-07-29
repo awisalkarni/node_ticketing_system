@@ -6,14 +6,48 @@ let Device = require('../models/device.model');
 let Comment = require('../models/ticket_comments.model');
 
 exports.index = (req, res) => {
-    Ticket.find()
+    Ticket.find({
+        status: { $ne: 'complete' }
+    })
+        .populate(['user', 'device', 'comments'])
+        .then(tickets => res.json(tickets))
+        .catch(err => res.status(400).json('Error: ' + err));
+}
+
+exports.filter = (req, res) => {
+
+    const status = req.query.status
+    const priority = req.query.priority
+
+    var filter;
+
+    if ((priority == undefined || priority == "") && (status == undefined || status == "")) {
+        filter = {
+
+        }
+    } else if (priority == "" || priority == undefined) {
+        filter = {
+            status: status
+        }
+    } else if (status == "" || status == undefined) {
+        filter = {
+            priority: priority
+        }
+    } else {
+        filter = {
+            status: status,
+            priority: priority
+        };
+    }
+
+     Ticket.find(filter)
         .populate(['user', 'device', 'comments'])
         .then(tickets => res.json(tickets))
         .catch(err => res.status(400).json('Error: ' + err));
 }
 
 exports.prepare = async (req, res) => {
-
+ 
     Promise.all([
         User.find(),
         Priority.find(),

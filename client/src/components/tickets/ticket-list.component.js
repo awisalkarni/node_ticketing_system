@@ -27,7 +27,9 @@ export default class TicketsList extends Component {
                 startDate: new Date(),
                 endDate: new Date(),
                 key: 'selection',
-              },
+            },
+            filteredStatus: "",
+            filteredPriority: ""
         }
 
         this.state.token = localStorage.getItem('token');
@@ -54,25 +56,25 @@ export default class TicketsList extends Component {
             title: 'Confirm to submit',
             message: 'Are you sure to do this.',
             buttons: [
-              {
-                label: 'Yes',
-                onClick: () => {
-                    // console.log(this)
-                    console.log(this.deleteTicket(id))
+                {
+                    label: 'Yes',
+                    onClick: () => {
+                        // console.log(this)
+                        console.log(this.deleteTicket(id))
+                    }
+                },
+                {
+                    label: 'No',
+                    onClick: () => { }
                 }
-              },
-              {
-                label: 'No',
-                onClick: () => {}
-              }
             ]
-          });
+        });
     }
 
     deleteTicket(id) {
 
         console.log(id)
-        
+
         axios.delete('/api/ticket/' + id, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
             .then(res => {
                 // window.location = '/ticket';
@@ -85,8 +87,6 @@ export default class TicketsList extends Component {
 
     changeStatus(ticket, status) {
 
-        console.log(`id: ${ticket._id}, status: ${status}`);
-
         ticket.status = status;
 
         axios.post('/api/ticket/update/' + ticket._id, ticket, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
@@ -94,6 +94,25 @@ export default class TicketsList extends Component {
                 window.location = '/ticket';
             })
             .catch(err => console.log(err));
+
+    }
+
+    filter({status, priority } ) {
+
+        axios.get('/api/ticket/filter', {
+            params: {
+              status: status,
+              priority: priority
+            }
+          }, { headers: {'Authorization': `Bearer ${this.state.token}`}})
+        .then(res => {
+            this.setState({
+                tickets: res.data,
+                filteredStatus: status,
+                filteredPriority: priority
+            })
+        })
+        .catch(err => console.log(err))
 
     }
 
@@ -132,7 +151,33 @@ export default class TicketsList extends Component {
             <div>
                 <h3>Tickets <Link className="btn btn-primary" to="/ticket/add">Add</Link></h3>
 
-              
+                <div className="dropdown">
+                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Status {this.state.filteredStatus}
+                    </button>
+                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <button className={`dropdown-item`} onClick={() => {this.filter({ status: "" })}}>All</button>
+                        <button className={`dropdown-item`} onClick={() => {this.filter({ status: 'open' })}}>Open</button>
+                        <button className={`dropdown-item`} onClick={() => {this.filter({ status: 'on_hold' })}}>On Hold</button>
+                        <button className={`dropdown-item`} onClick={() => {this.filter({ status: 'in_progress' })}}>In Progress</button>
+                        <button className={`dropdown-item`} onClick={() => {this.filter({ status: 'in_review' })}}>In Review</button>
+                        <button className={`dropdown-item`} onClick={() => {this.filter({ status: 'complete' })}}>Complete</button>
+                    </div>
+                </div>
+
+                <div className="dropdown">
+                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Priority {this.state.filteredPriority}
+                    </button>
+                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <button className={`dropdown-item`} onClick={() => {this.filter({priority: '' })}}>All</button>
+                        <button className={`dropdown-item`} onClick={() => {this.filter({priority: 'low' })}}>Low</button>
+                        <button className={`dropdown-item`} onClick={() => {this.filter({priority: 'medium' })}}>Medium</button>
+                        <button className={`dropdown-item`} onClick={() => {this.filter({priority: 'high' })}}>High</button>
+                    </div>
+                </div>
+
+
 
                 <table className="table">
                     <thead className="thead-light">

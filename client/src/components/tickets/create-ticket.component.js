@@ -92,7 +92,7 @@ export default class CreateTicket extends Component {
         console.log(ticket);
 
         axios.post('/api/ticket/add', ticket, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
-            .then(res => window.location = '/');
+            .then(res => window.location = '/ticket');
 
         
     }
@@ -151,9 +151,9 @@ export default class CreateTicket extends Component {
                             
                             value={this.state.selectedPriorities}
                             onChange={this.onChangePriority}>
-                            <option value="high">High</option>
-                            <option value="medium" selected={true}>Medium</option>
-                            <option value="low">Low</option>
+                                <option value="medium" selected={true}>Medium</option>
+                                <option value="high">High</option>
+                                <option value="low">Low</option>
                         </select>
                     </div>
 
